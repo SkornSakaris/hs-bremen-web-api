@@ -1,13 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: LetoAtreides
+ * Date: 22.05.2016
+ * Time: 15:27
+ */
 
-namespace HsBremen\WebApi\Order;
+namespace HsBremen\WebApi\Module;
+
 
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
-use Swagger\Annotations as SWG;
 
-class OrderRoutesProvider implements ControllerProviderInterface
+class ModuleRoutesProvider implements ControllerProviderInterface
 {
     /** {@inheritdoc} */
     public function connect(Application $app)
@@ -17,53 +23,55 @@ class OrderRoutesProvider implements ControllerProviderInterface
 
         /**
          * @SWG\Parameter(name="id", type="integer", format="int32", in="path")
-         * @SWG\Tag(name="order", description="All about orders")
+         * @SWG\Tag(name="module", description="All about modules")
          */
 
         /**
          * @SWG\Get(
-         *     path="/order/",
-         *     tags={"order"},
+         *     path="/module/",
+         *     tags={"module"},
          *     @SWG\Response(response="200", description="An example resource")
          * )
          */
-        // see https://github.com/silexphp/Silex/issues/149
-        $controllers->get('/', 'service.order:getList');
+        $controllers->get('/', 'service.module:getList');
+
         /**
          * @SWG\Get(
-         *     path="/order/{id}",
-         *     tags={"order"},
+         *     path="/module/{id}",
+         *     tags={"module"},
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
          *         response="200",
          *         description="An example resource",
-         *          @SWG\Schema(ref="#/definitions/order")
+         *          @SWG\Schema(ref="#/definitions/module")
          *     )
          * )
          */
-        $controllers->get('/{orderId}', 'service.order:getDetails');
+        $controllers->get('/{moduleId}', 'service.module:getDetails');
+
         /**
          * @SWG\Post(
-         *     tags={"order"},
-         *     path="/order/",
-         *     @SWG\Parameter(name="order", in="body", @SWG\Schema(ref="#/definitions/order")),
+         *     tags={"module"},
+         *     path="/module/",
+         *     @SWG\Parameter(name="module", in="body", @SWG\Schema(ref="#/definitions/module")),
          *     @SWG\Response(response="201", description="An example resource")
          * ))
          */
-        $controllers->post('/', 'service.order:createOrder');
+        $controllers->post('/', 'service.module:createModule');
+
         /**
          * @SWG\Put(
-         *     tags={"order"},
-         *     path="/order/{id}",
+         *     tags={"module"},
+         *     path="/module/{id}",
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
          *          response="200",
          *          description="An example resource",
-         *          @SWG\Schema(ref="#/definitions/order")
+         *          @SWG\Schema(ref="#/definitions/module")
          *     )
          * )
          */
-        $controllers->put('/{orderId}', 'service.order:changeOrder');
+        $controllers->put('/{moduleId}', 'service.module:changeModule');
 
         return $controllers;
     }
