@@ -66,7 +66,36 @@ class Module
         if (array_key_exists('id', $row)) {
             $module->setId($row['id']);
         }
-        // muss noch fortgehfuehrt werden
+        if (array_key_exists('generated', $row)) {
+            $module->setId($row['generated']);
+        }
+        if (array_key_exists('code', $row)) {
+            $module->setId($row['code']);
+        }
+        if (array_key_exists('shortname', $row)) {
+            $module->setId($row['shortname']);
+        }
+        if (array_key_exists('longname', $row)) {
+            $module->setId($row['longname']);
+        }
+        if (array_key_exists('description', $row)) {
+            $module->setId($row['description']);
+        }
+        if (array_key_exists('ects', $row)) {
+            $module->setId($row['ects']);
+        }
+        if (array_key_exists('conditions', $row)) {
+            $module->setId($row['conditions']);
+        }
+        if (array_key_exists('lecturer', $row)) {
+            $module->setId($row['lecturer']);
+        }
+        if (array_key_exists('attempt', $row)) {
+            $module->setId($row['attempt']);
+        }
+        if (array_key_exists('grade', $row)) {
+            $module->setId($row['grade']);
+        }
 
         return $module;
     }

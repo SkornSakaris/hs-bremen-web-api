@@ -3,11 +3,12 @@
 namespace HsBremen\WebApi\Module;
 
 use Doctrine\DBAL\Driver\Connection;
+use HsBremen\WebApi\Entity\Module;
 
 class ModuleRepository
 {
     /**
-     * @var  Connection  $connection
+     * @var Connection $connection
      */
     private $connection;
 
@@ -42,12 +43,34 @@ CREATE TABLE IF NOT EXISTS `{$this->getTableName()}` (
 )
 
 EOS;
+        return $this->connection->exec($sql);
+    }
 
+    public function createTestData(){
+        $sql = <<<EOS
+INSERT INTO `{$this->getTableName()}` VALUES(
+    null, true, '1.1', 'MATHE1', 'Lineare Algebra', 'Mathe nervt', 1, 6, '-'
+)
+EOS;
         return $this->connection->exec($sql);
     }
 
     public function getAll()
     {
+        $sql = <<<EOS
+SELECT m.*
+FROM `{$this->getTableName()}` m
+EOS;
+
+        $moduls = $this->connection->fetchAll($sql);
+
+        $result = [];
+
+        foreach ($moduls as $row) {
+            $result[] = Module::createFromArray($row);
+        }
+
+        return $result;
     }
 
     public function getById($moduleId)
