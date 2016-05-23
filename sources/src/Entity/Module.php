@@ -31,33 +31,39 @@ class Module
     private $attempt;
     private $grade;
 
-    /**
-     * Module constructor.
-     * @param $id
-     * @param $generated
-     * @param $code
-     * @param $shortname
-     * @param $longname
-     * @param $description
-     * @param $ects
-     * @param $conditions
-     * @param $lecturer
-     * @param $attempt
-     * @param $grade
-     */
-    public function __construct($id, $generated, $code, $shortname, $longname, $description, $ects, $conditions, $lecturer, $attempt, $grade)
-    {
-        $this->id = $id;
-        $this->generated = $generated;
-        $this->code = $code;
-        $this->shortname = $shortname;
-        $this->longname = $longname;
-        $this->description = $description;
-        $this->ects = $ects;
-        $this->conditions = $conditions;
-        $this->lecturer = $lecturer;
-        $this->attempt = $attempt;
-        $this->grade = $grade;
+//    /**
+//     * Module constructor.
+//     *
+//     * @param $id
+//     * @param $generated
+//     * @param $code
+//     * @param $shortname
+//     * @param $longname
+//     * @param $description
+//     * @param $ects
+//     * @param $conditions
+//     * @param $lecturer
+//     * @param $attempt
+//     * @param $grade
+//     */
+//    public function __construct($id, $generated, $code, $shortname, $longname, $description, $ects, $conditions, $lecturer, $attempt, $grade)
+//    {
+//        $this->id = $id;
+//        $this->generated = $generated;
+//        $this->code = $code;
+//        $this->shortname = $shortname;
+//        $this->longname = $longname;
+//        $this->description = $description;
+//        $this->ects = $ects;
+//        $this->conditions = $conditions;
+//        $this->lecturer = $lecturer;
+//        $this->attempt = $attempt;
+//        $this->grade = $grade;
+//    }
+    public function __construct($params = array()) {
+        foreach ($params as $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 
     public static function createFromArray(array $row){
@@ -67,34 +73,34 @@ class Module
             $module->setId($row['id']);
         }
         if (array_key_exists('generated', $row)) {
-            $module->setId($row['generated']);
+            $module->setGenerated($row['generated']);
         }
         if (array_key_exists('code', $row)) {
-            $module->setId($row['code']);
+            $module->setCode($row['code']);
         }
         if (array_key_exists('shortname', $row)) {
-            $module->setId($row['shortname']);
+            $module->setShortname($row['shortname']);
         }
         if (array_key_exists('longname', $row)) {
-            $module->setId($row['longname']);
+            $module->setLongname($row['longname']);
         }
         if (array_key_exists('description', $row)) {
-            $module->setId($row['description']);
+            $module->setDescription($row['description']);
         }
         if (array_key_exists('ects', $row)) {
-            $module->setId($row['ects']);
+            $module->setEcts($row['ects']);
         }
         if (array_key_exists('conditions', $row)) {
-            $module->setId($row['conditions']);
+            $module->setConditions($row['conditions']);
         }
         if (array_key_exists('lecturer', $row)) {
-            $module->setId($row['lecturer']);
+            $module->setLecturer($row['lecturer']);
         }
         if (array_key_exists('attempt', $row)) {
-            $module->setId($row['attempt']);
+            $module->setAttempt($row['attempt']);
         }
         if (array_key_exists('grade', $row)) {
-            $module->setId($row['grade']);
+            $module->setGrade($row['grade']);
         }
 
         return $module;
