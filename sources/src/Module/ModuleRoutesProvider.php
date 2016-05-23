@@ -98,7 +98,7 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
          *          response="200",
-         *          description="An example resource",
+         *          description="An example resource"
          *     )
          * )
          */
