@@ -22,15 +22,26 @@ class ModuleRoutesProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         /**
-         * @SWG\Parameter(name="id", type="integer", format="int32", in="path")
-         * @SWG\Tag(name="module", description="All about modules")
+         * @SWG\Parameter(
+         *     name="id",
+         *     type="integer",
+         *     format="int32",
+         *     in="path"
+         * )
+         * @SWG\Tag(
+         *     name="module",
+         *     description="All about modules"
+         * )
          */
 
         /**
          * @SWG\Get(
          *     path="/module/",
          *     tags={"module"},
-         *     @SWG\Response(response="200", description="An example resource")
+         *     @SWG\Response(
+         *         response="200",
+         *         description="An example resource"
+         *     )
          * )
          */
         $controllers->get('/', 'service.module:getList');
@@ -53,9 +64,16 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          * @SWG\Post(
          *     tags={"module"},
          *     path="/module/",
-         *     @SWG\Parameter(name="module", in="body", @SWG\Schema(ref="#/definitions/module")),
-         *     @SWG\Response(response="201", description="An example resource")
-         * ))
+         *     @SWG\Parameter(
+         *         name="module",
+         *         in="body",
+         *         @SWG\Schema(ref="#/definitions/module")
+         *     ),
+         *     @SWG\Response(
+         *         response="201",
+         *         description="An example resource")
+         *     )
+         * )
          */
         $controllers->post('/', 'service.module:createModule');
 

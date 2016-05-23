@@ -8,10 +8,13 @@ use HsBremen\WebApi\Database\DatabaseProvider;
 use HsBremen\WebApi\Module\ModuleServiceProvider;
 use HsBremen\WebApi\Order\OrderServiceProvider;
 use HsBremen\WebApi\Security\SecurityProvider;
+use HsBremen\WebApi\Start\StartServiceProvider;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Silex\Application as Silex;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
 use Swagger\Annotations as SWG;
 use SwaggerUI\Silex\Provider\SwaggerUIServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +45,11 @@ class Application extends Silex
 
         // fuer die benutzten Funktionen benoetigte Silex-Provider
         $app->register(new ServiceControllerServiceProvider());
+        $app->register(new UrlGeneratorServiceProvider());
         $app->register(new SessionServiceProvider());
+        $app->register(new TwigServiceProvider(), array(
+            'twig.path' => __DIR__ . '/../views',
+        ));
 
         // fuer Swagger benoetigte Provider (inkl. after-Bedingung weiter unten)
         $app->register(new SwaggerProvider(),
@@ -62,6 +69,7 @@ class Application extends Silex
         $app->register(new SecurityProvider());
 
         // eigene Provider fuer ID-Container, Routing, Funktionalitaet, etc.
+        $app->register(new StartServiceProvider());
         $app->register(new OrderServiceProvider());
         $app->register(new ModuleServiceProvider());
 

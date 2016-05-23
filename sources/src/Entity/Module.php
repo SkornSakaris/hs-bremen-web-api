@@ -17,7 +17,10 @@ class Module implements \JsonSerializable
 {
     /**
      * @var int $id
-     * @SWG\Property(type="integer", format="int32")
+     * @SWG\Property(
+     *     type="integer",
+     *     format="int32"
+     * )
      */
     private $id;
     private $generated;

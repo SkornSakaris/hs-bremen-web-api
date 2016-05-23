@@ -16,7 +16,6 @@ class OrderRoutesProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         /**
-         * @SWG\Parameter(name="id", type="integer", format="int32", in="path")
          * @SWG\Tag(name="order", description="All about orders")
          */
 

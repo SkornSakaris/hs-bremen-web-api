@@ -2,7 +2,8 @@
 
 namespace HsBremen\WebApi\Module;
 
-use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Connection;
+use HsBremen\WebApi\Database\DatabaseException;
 use HsBremen\WebApi\Entity\Module;
 
 class ModuleRepository
@@ -73,12 +74,31 @@ EOS;
         return $result;
     }
 
-    public function getById($moduleId)
+    public function getById($id)
     {
+        $sql = <<<EOS
+SELECT m.*
+FROM `{$this->getTableName()}` m
+WHERE m.id = :id
+EOS;
+
+        $moduls = $this->connection->fetchAll($sql, ['id' => $id]);
+        if (count($moduls) === 0) {
+            throw new DatabaseException(
+                sprintf('Order with id "%d" not exists!', $id)
+            );
+        }
+
+        return Module::createFromArray($moduls[0]);
     }
 
-    public function save($module)
+    public function save(Module $module)
     {
+        $data = $module->jsonSerialize();
+        unset($data['id']);
+
+        $this->connection->insert("`{$this->getTableName()}`", $data);
+        $module->setId($this->connection->lastInsertId());
     }
 
     /**

@@ -52,7 +52,7 @@ class ModuleService
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createOrder(Request $request)
+    public function createModule(Request $request)
     {
         $postData = $request->request->all();
         unset($postData['id']);
