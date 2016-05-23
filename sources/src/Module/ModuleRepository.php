@@ -31,7 +31,7 @@ class ModuleRepository
     {
         $sql = <<<EOS
 CREATE TABLE IF NOT EXISTS `{$this->getTableName()}` (
-    modul_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     generated BOOLEAN,
     code VARCHAR(5),
     shortname VARCHAR(10) NOT NULL,

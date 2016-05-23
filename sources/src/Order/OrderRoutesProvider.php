@@ -27,7 +27,7 @@ class OrderRoutesProvider implements ControllerProviderInterface
          *     @SWG\Response(response="200", description="An example resource")
          * )
          */
-        // see https://github.com/silexphp/Silex/issues/149
+
         $controllers->get('/', 'service.order:getList');
         /**
          * @SWG\Get(
@@ -42,6 +42,7 @@ class OrderRoutesProvider implements ControllerProviderInterface
          * )
          */
         $controllers->get('/{orderId}', 'service.order:getDetails');
+
         /**
          * @SWG\Post(
          *     tags={"order"},
@@ -51,6 +52,7 @@ class OrderRoutesProvider implements ControllerProviderInterface
          * ))
          */
         $controllers->post('/', 'service.order:createOrder');
+
         /**
          * @SWG\Put(
          *     tags={"order"},

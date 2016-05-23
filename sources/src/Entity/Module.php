@@ -42,6 +42,10 @@ class Module implements \JsonSerializable
         }
     }
 
+    /**
+     * @param array $row
+     * @return Module
+     */
     public static function createFromArray(array $row){
         $module = new self();
 
