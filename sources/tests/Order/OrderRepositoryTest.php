@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `order` (
     PRIMARY KEY (id)
 )
 EOS;
-
         $this->db->expects(self::once())
                  ->method('exec')
                  ->with($sql)
@@ -128,7 +127,7 @@ EOS;
         $orderData = ['status' => 'placed'];
         $this->db->expects(self::once())
                  ->method('insert')
-                 ->with('order', $orderData)
+                 ->with('`order`', $orderData)
         ;
 
         $this->db->expects(self::once())

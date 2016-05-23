@@ -9,6 +9,7 @@ use HsBremen\WebApi\Module\ModuleServiceProvider;
 use HsBremen\WebApi\Order\OrderServiceProvider;
 use HsBremen\WebApi\Security\SecurityProvider;
 use HsBremen\WebApi\Start\StartServiceProvider;
+use HsBremen\WebApi\User\UserServiceProvider;
 use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Silex\Application as Silex;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -70,6 +71,7 @@ class Application extends Silex
 
         // eigene Provider fuer ID-Container, Routing, Funktionalitaet, etc.
         $app->register(new StartServiceProvider());
+        $app->register(new UserServiceProvider());
         $app->register(new OrderServiceProvider());
         $app->register(new ModuleServiceProvider());
 

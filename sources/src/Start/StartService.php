@@ -29,19 +29,4 @@ class StartService
             'last_username' => $app['session']->get('_security.last_username'),
         ));
     }
-
-    public function getLoginCheck()
-    {
-        return 'LoginCheck Response';
-    }
-
-    public function getFoo()
-    {
-        return 'Foo Response';
-    }
-
-    public function getLogout()
-    {
-        return 'Logout Response';
-    }
 }

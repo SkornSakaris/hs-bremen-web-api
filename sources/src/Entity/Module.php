@@ -17,21 +17,74 @@ class Module implements \JsonSerializable
 {
     /**
      * @var int $id
-     * @SWG\Property(
-     *     type="integer",
-     *     format="int32"
-     * )
+     * @SWG\Property(type="integer", format="int32", description="Die interne Id des Moduls")
      */
     private $id;
+
+    /**
+     * @var boolean $generated
+     * @SWG\Property(type="boolean", description="Ob das Modul vom Benutzer erstellt wurde")
+     */
     private $generated;
+
+    /**
+     * @var string $code
+     * @SWG\Property(type="string", description="Der Code das Moduls (z.B. PO)")
+     */
     private $code;
+
+    /**
+     * @var string $shortname
+     * @SWG\Property(type="string")
+     */
     private $shortname;
+
+    /**
+     * @var string $longname
+     * @SWG\Property(type="string")
+     */
     private $longname;
+
+    /**
+     * @var string $description
+     * @SWG\Property(type="string")
+     */
     private $description;
+
+    /**
+     * @var int $semester
+     * @SWG\Property(type="integer", format="int32")
+     */
+    private $semester;
+
+    /**
+     * @var int $ects
+     * @SWG\Property(type="integer", format="int32")
+     */
     private $ects;
+
+    /**
+     * @var string $conditions
+     * @SWG\Property(type="string")
+     */
     private $conditions;
+
+    /**
+     * @var string $lecturer
+     * @SWG\Property(type="string")
+     */
     private $lecturer;
+
+    /**
+     * @var int $attempt
+     * @SWG\Property(type="integer", format="int32")
+     */
     private $attempt;
+
+    /**
+     * @var float $grade
+     * @SWG\Property(type="number", format="float")
+     */
     private $grade;
 
     /**
@@ -70,6 +123,9 @@ class Module implements \JsonSerializable
         if (array_key_exists('description', $row)) {
             $module->setDescription($row['description']);
         }
+        if (array_key_exists('semester', $row)) {
+            $module->setSemester($row['semester']);
+        }
         if (array_key_exists('ects', $row)) {
             $module->setEcts($row['ects']);
         }
@@ -98,6 +154,7 @@ class Module implements \JsonSerializable
             'shortname' => $this->shortname,
             'longname' => $this->longname,
             'description' => $this->description,
+            'semester' => $this->semester,
             'ects' => $this->ects,
             'conditions' => $this->conditions,
             'lecturer' => $this->lecturer,
@@ -200,6 +257,22 @@ class Module implements \JsonSerializable
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSemester()
+    {
+        return $this->semester;
+    }
+
+    /**
+     * @param mixed $semester
+     */
+    public function setSemester($semester)
+    {
+        $this->semester = $semester;
     }
 
     /**

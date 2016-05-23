@@ -42,17 +42,12 @@ CREATE TABLE IF NOT EXISTS `{$this->getTableName()}` (
     ects INT(1),
     conditions VARCHAR(15)
 )
-
 EOS;
         return $this->connection->exec($sql);
     }
 
     public function createTestData(){
-        $sql = <<<EOS
-INSERT INTO `{$this->getTableName()}` VALUES(
-    null, true, '1.1', 'MATHE1', 'Lineare Algebra', 'Mathe nervt', 1, 6, '-'
-)
-EOS;
+        $sql = "INSERT INTO `{$this->getTableName()}` VALUES(null, true, '1.1', 'MATHE1', 'Lineare Algebra', 'Mathe nervt', 1, 6, '-')";
         return $this->connection->exec($sql);
     }
 
