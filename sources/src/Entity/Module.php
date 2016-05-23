@@ -13,7 +13,7 @@ use Swagger\Annotations as SWG;
  *     type="object"
  * )
  */
-class Module
+class Module implements \JsonSerializable
 {
     /**
      * @var int $id
@@ -31,35 +31,11 @@ class Module
     private $attempt;
     private $grade;
 
-//    /**
-//     * Module constructor.
-//     *
-//     * @param $id
-//     * @param $generated
-//     * @param $code
-//     * @param $shortname
-//     * @param $longname
-//     * @param $description
-//     * @param $ects
-//     * @param $conditions
-//     * @param $lecturer
-//     * @param $attempt
-//     * @param $grade
-//     */
-//    public function __construct($id, $generated, $code, $shortname, $longname, $description, $ects, $conditions, $lecturer, $attempt, $grade)
-//    {
-//        $this->id = $id;
-//        $this->generated = $generated;
-//        $this->code = $code;
-//        $this->shortname = $shortname;
-//        $this->longname = $longname;
-//        $this->description = $description;
-//        $this->ects = $ects;
-//        $this->conditions = $conditions;
-//        $this->lecturer = $lecturer;
-//        $this->attempt = $attempt;
-//        $this->grade = $grade;
-//    }
+    /**
+     * Module constructor.
+     *
+     * @param array $params
+     */
     public function __construct($params = array()) {
         foreach ($params as $key => $value) {
             $this->{$key} = $value;
@@ -104,6 +80,23 @@ class Module
         }
 
         return $module;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'generated' => $this->generated,
+            'code' => $this->code,
+            'shortname' => $this->shortname,
+            'longname' => $this->longname,
+            'description' => $this->description,
+            'ects' => $this->ects,
+            'conditions' => $this->conditions,
+            'lecturer' => $this->lecturer,
+            'attempt' => $this->attempt,
+            'grade' => $this->grade,
+        ];
     }
 
     /**
