@@ -19,7 +19,11 @@ class SecurityProvider implements ServiceProviderInterface
                     'pattern' => '^/login$',
                     'anonymous' => true
                 ),
-                'default' => array(
+                'swagger' => array(
+                    'pattern' => '^/docs.*$',
+                    'anonymous' => true
+                ),
+                'secured' => array(
                     'pattern' => '^/.*$',
                     'anonymous' => true,
                     'form' => array(
@@ -37,6 +41,7 @@ class SecurityProvider implements ServiceProviderInterface
             ),
             'security.access_rules' => array(
                 array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+                array('^/docs.+$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
                 array('^/.+$', 'ROLE_USER')
             )
         ));

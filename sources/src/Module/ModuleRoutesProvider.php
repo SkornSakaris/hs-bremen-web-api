@@ -91,6 +91,19 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          */
         $controllers->put('/{moduleId}', 'service.module:changeModule');
 
+        /**
+         * @SWG\Delete(
+         *     tags={"module"},
+         *     path="/module/{id}",
+         *     @SWG\Parameter(ref="#/parameters/id"),
+         *     @SWG\Response(
+         *          response="200",
+         *          description="An example resource",
+         *     )
+         * )
+         */
+        $controllers->delete('/{moduleId}', 'service.module:changeModule');
+
         return $controllers;
     }
 }
