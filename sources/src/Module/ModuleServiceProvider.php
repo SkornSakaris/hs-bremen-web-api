@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: LetoAtreides
- * Date: 22.05.2016
- * Time: 15:27
- */
 
 namespace HsBremen\WebApi\Module;
-
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;

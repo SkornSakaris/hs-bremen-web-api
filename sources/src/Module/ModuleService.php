@@ -2,6 +2,7 @@
 
 namespace HsBremen\WebApi\Module;
 
+use HsBremen\WebApi\Entity\Module;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,7 @@ class ModuleService
      */
     public function __construct(ModuleRepository $moduleRepository)
     {
-        $this->$moduleRepository = $moduleRepository;
+        $this->moduleRepository = $moduleRepository;
     }
 
     /**
