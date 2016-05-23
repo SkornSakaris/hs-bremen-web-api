@@ -3,6 +3,7 @@
 namespace HsBremen\WebApi\User;
 
 use Doctrine\DBAL\Connection;
+use HsBremen\WebApi\Entity\User;
 
 class UserRepository
 {
@@ -24,6 +25,24 @@ class UserRepository
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    public function getAll()
+    {
+        $sql = <<<EOS
+SELECT u.*
+FROM `{$this->getTableName()}` u
+EOS;
+
+        $users = $this->connection->fetchAll($sql);
+
+        $result = [];
+
+        foreach ($users as $row) {
+            $result[] = new User($row['id'], $row['username'], $row['password'], explode(',', $row['roles']), true, true, true, true);
+        }
+
+        return $result;
     }
 
     public function dropTable()

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: LetoAtreides
- * Date: 23.05.2016
- * Time: 22:21
- */
 
 namespace HsBremen\WebApi\Entity;
-
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
@@ -17,70 +10,120 @@ class User implements \JsonSerializable, AdvancedUserInterface
     private $username;
     private $salt;
     private $password;
+    private $enabled;
+    private $accountNonExpired;
+    private $credentialsNonExpired;
+    private $accountNonLocked;
     private $roles;
 
-    function jsonSerialize()
+    public function __construct($id = null, $username, $password, array $roles = array(), $enabled = true, $userNonExpired = true, $credentialsNonExpired = true, $userNonLocked = true)
+    {
+        if ('' === $username || null === $username) {
+            throw new \InvalidArgumentException('The username cannot be empty.');
+        }
+
+        $this->id = $id;
+        $this->username = $username;
+        $this->password = $password;
+        $this->enabled = $enabled;
+        $this->accountNonExpired = $userNonExpired;
+        $this->credentialsNonExpired = $credentialsNonExpired;
+        $this->accountNonLocked = $userNonLocked;
+        $this->roles = $roles;
+    }
+
+    public function jsonSerialize()
     {
         return [
             'id' => $this->id,
             'username' => $this->username,
-            'salt' => $this->salt,
             'password' => $this->password,
+            'enabled' => $this->enabled,
+            'accountNonExpired' => $this->accountNonExpired,
+            'credentialsNonExpired' => $this->credentialsNonExpired,
+            'accountNonLocked' => $this->accountNonLocked,
             'roles' => $this->roles,
         ];
     }
 
-    /** {@inheritdoc} */
-    public function isAccountNonExpired()
+    public function __toString()
     {
-        // TODO: Implement isAccountNonExpired() method.
+        return $this->getUsername();
     }
 
-    /** {@inheritdoc} */
-    public function isAccountNonLocked()
+    public function getId()
     {
-        // TODO: Implement isAccountNonLocked() method.
+        return $this->id;
     }
 
-    /** {@inheritdoc} */
-    public function isCredentialsNonExpired()
-    {
-        // TODO: Implement isCredentialsNonExpired() method.
-    }
-
-    /** {@inheritdoc} */
-    public function isEnabled()
-    {
-        // TODO: Implement isEnabled() method.
-    }
-
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        return $this->roles;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        return $this->password;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccountNonExpired()
+    {
+        return $this->accountNonExpired;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccountNonLocked()
+    {
+        return $this->accountNonLocked;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isCredentialsNonExpired()
+    {
+        return $this->credentialsNonExpired;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
     }
 }

@@ -26,6 +26,7 @@ class ModuleServiceProvider implements ServiceProviderInterface
     {
         /** @var ModuleRepository $repo */
         $repo = $app['repo.module'];
+        $repo->dropTable();
         $repo->createTable();
         $repo->createTestData();
     }

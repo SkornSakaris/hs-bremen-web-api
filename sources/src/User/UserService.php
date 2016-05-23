@@ -2,6 +2,8 @@
 
 namespace HsBremen\WebApi\User;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class UserService
 {
 
@@ -21,7 +23,7 @@ class UserService
 
     public function getUserList()
     {
-        return 'User Response';
+        return new JsonResponse($this->userRepository->getAll());
     }
 
     public function createNewUser()

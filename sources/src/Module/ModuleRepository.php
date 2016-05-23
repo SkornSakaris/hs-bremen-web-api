@@ -28,6 +28,12 @@ class ModuleRepository
         $this->connection = $connection;
     }
 
+    public function dropTable()
+    {
+        $sql = "DROP TABLE `{$this->getTableName()}`";
+        $this->connection->exec($sql);
+    }
+
     public function createTable()
     {
         $sql = <<<EOS
@@ -48,7 +54,11 @@ EOS;
 
     public function createTestData(){
         $sql = "INSERT INTO `{$this->getTableName()}` VALUES(null, true, '1.1', 'MATHE1', 'Lineare Algebra', 'Mathe nervt', 1, 6, '-')";
-        return $this->connection->exec($sql);
+        $this->connection->exec($sql);
+        $sql = "INSERT INTO `{$this->getTableName()}` VALUES(null, true, '1.2', 'MATHE2', 'Analysis', 'Mathe nervt immer noch', 1, 6, '-')";
+        $this->connection->exec($sql);
+        $sql = "INSERT INTO `{$this->getTableName()}` VALUES(null, true, '1.0', 'UNKNOWN', 'Unbekanntes Modul', 'Hab ich mir ausgedacht', 1, 0, '-')";
+        $this->connection->exec($sql);
     }
 
     public function getAll()
