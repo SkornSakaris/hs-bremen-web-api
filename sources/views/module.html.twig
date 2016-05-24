@@ -1,0 +1,89 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="well">
+        <h3>Module!</h3>
+    </div>
+        <form class="form-horizontal" role="form">
+            <div class="col-lg-12"">
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="id">Id:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="id" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="generated">Generiert:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="generated" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="code">Code:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="code" placeholder="1.1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="shortname">Kürzel:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="shortname" placeholder="MATHE1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="longname">Bezeichnung:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="longname" placeholder="Lineare Algebra">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="description">Beschreibung:</label>
+                    <div class="col-sm-3">
+                        <textarea class="form-control" id="description" placeholder="Die Beschreibung des Moduls"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="semester">Semester:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="semester" placeholder="2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="ects">ECTS:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="ects" placeholder="6">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="conditions">Vorraussetzung:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="conditions" placeholder="-">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="lecturer">Dozent:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="lecturer" placeholder="Prof. Dr. Mustermann">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="attempt">Versuch:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="attempt" placeholder="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="grade">Note:</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" id="grade" placeholder="4,0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

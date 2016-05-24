@@ -3,14 +3,22 @@
 namespace HsBremen\WebApi\Module;
 
 use HsBremen\WebApi\Entity\Module;
+use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ModuleService
 {
-
-    /** @var  ModuleRepository */
+    /**
+     * @var ModuleRepository $moduleRepository
+     */
     private $moduleRepository;
+
+    /**
+     * @var string $templateName
+     */
+    private $templateName;
 
     /**
      * OrderService constructor.
@@ -21,16 +29,38 @@ class ModuleService
     public function __construct(ModuleRepository $moduleRepository)
     {
         $this->moduleRepository = $moduleRepository;
+        $this->templateName = 'module.html.twig';
     }
 
     /**
      * GET /module
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param Request $request
+     * @param Application $app
+     * @return JsonResponse
      */
-    public function getAllModuls()
+    public function getAllModuls(Request $request, Application $app)
     {
-        return new JsonResponse($this->moduleRepository->getAll());
+//        $token = $app['security.token_storage']->getToken();
+//        if (null !== $token) {
+//            $user = $token->getUser();
+//        }
+//        echo $user . '<br>';
+//        var_dump($token);
+
+        $result = null;
+        $data = $this->moduleRepository->getAll();
+
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $result = new JsonResponse($data, 200);
+        }
+        if (0 === strpos($request->headers->get('Accept'), 'text/html'))
+        {
+            $result = new Response($app['twig']->render($this->templateName, $data), 200);
+        }
+
+        return $result;
     }
 
     /**

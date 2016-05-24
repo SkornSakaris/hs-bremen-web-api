@@ -85,6 +85,13 @@ class Application extends Silex
         });
 
         $app->after($app['cors']);
+
+        $app->before(function (Request $request) {
+            if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+                $data = json_decode($request->getContent(), true);
+                $request->request->replace(is_array($data) ? $data : array());
+            }
+        });
     }
 
     private function requestIsJson(Request $request)
