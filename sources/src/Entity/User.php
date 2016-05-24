@@ -3,9 +3,23 @@
 namespace HsBremen\WebApi\Entity;
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Swagger\Annotations as SWG;
 
+/**
+ * Class User
+ *
+ * @package HsBremen\WebApi\Entity
+ * @SWG\Definition(
+ *     definition="user",
+ *     type="object"
+ * )
+ */
 class User implements \JsonSerializable, AdvancedUserInterface
 {
+    /**
+     * @var int $id
+     * @SWG\Property(type="integer", format="int32", description="Die interne Id des Users")
+     */
     private $id;
     private $username;
     private $salt;

@@ -44,7 +44,7 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->get('/', 'service.module:getList');
+        $controllers->get('/', 'service.module:getAllModuls');
 
         /**
          * @SWG\Get(
@@ -54,11 +54,11 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     @SWG\Response(
          *         response="200",
          *         description="An example resource",
-         *          @SWG\Schema(ref="#/definitions/module")
+         *         @SWG\Schema(ref="#/definitions/module")
          *     )
          * )
          */
-        $controllers->get('/{moduleId}', 'service.module:getDetails');
+        $controllers->get('/{moduleId}', 'service.module:getModuleById');
 
         /**
          * @SWG\Post(
@@ -75,7 +75,7 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->post('/', 'service.module:createModule');
+        $controllers->post('/', 'service.module:createNewModule');
 
         /**
          * @SWG\Put(
@@ -89,7 +89,7 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->put('/{moduleId}', 'service.module:changeModule');
+        $controllers->put('/{moduleId}', 'service.module:changeModuleById');
 
         /**
          * @SWG\Delete(

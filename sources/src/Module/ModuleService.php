@@ -28,7 +28,7 @@ class ModuleService
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getList()
+    public function getAllModuls()
     {
         return new JsonResponse($this->moduleRepository->getAll());
     }
@@ -40,7 +40,7 @@ class ModuleService
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getDetails($moduleId)
+    public function getModuleById($moduleId)
     {
         return new JsonResponse($this->moduleRepository->getById($moduleId));
     }
@@ -52,7 +52,7 @@ class ModuleService
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createModule(Request $request)
+    public function createNewModule(Request $request)
     {
         $postData = $request->request->all();
         unset($postData['id']);
@@ -71,7 +71,7 @@ class ModuleService
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function changeOrder(Request $request)
+    public function changeModuleById(Request $request)
     {
         $module = new Module(1);
         $newId = $request->request->get('id', 0);
