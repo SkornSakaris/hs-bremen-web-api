@@ -21,6 +21,10 @@ class ModuleRepositoryTest extends \PHPUnit_Framework_TestCase
         ;
 
         $this->repository = new ModuleRepository($this->db);
+//        $this->repository = self::getMockBuilder(ModuleRepository::class)
+//            ->disableOriginalConstructor()
+//            ->getMock()
+//        ;
     }
 
     /**
@@ -60,10 +64,14 @@ EOS;
      */
     public function getModuleById()
     {
-        $sql   = <<<EOS
-SELECT m.*
-FROM `moduls` m
-WHERE m.id = :id
+        $sql = <<<EOS
+SELECT m.*, um.lecturer, um.attempt, um.grade
+FROM `users_moduls` um
+INNER JOIN `moduls` m
+ON um.module_id = m.id
+WHERE um.user_id = :user_id
+AND um.module_id = :module_id
+ORDER BY m.semester ASC
 EOS;
         $module = new Module(
             [
@@ -101,11 +109,11 @@ EOS;
 
         $this->db->expects(self::once())
             ->method('fetchAll')
-            ->with($sql, ['id' => 1])
+            ->with($sql, ['user_id' => 1, 'module_id' => 1])
             ->willReturn($moduls)
         ;
 
-        self::assertEquals($module, $this->repository->getById(1));
+        self::assertEquals($module, $this->repository->getById(1, 1));
     }
 
     /**
@@ -113,9 +121,13 @@ EOS;
      */
     public function getAllModules()
     {
-        $sql   = <<<EOS
-SELECT m.*
-FROM `moduls` m
+        $sql = <<<EOS
+SELECT m.*, um.lecturer, um.attempt, um.grade
+FROM `users_moduls` um
+INNER JOIN `moduls` m
+ON um.module_id = m.id
+WHERE um.user_id = :user_id
+ORDER BY m.semester ASC
 EOS;
         $module = new Module(
             [
@@ -153,11 +165,11 @@ EOS;
 
         $this->db->expects(self::once())
             ->method('fetchAll')
-            ->with($sql)
+            ->with($sql, ['user_id' => 1])
             ->willReturn($moduls)
         ;
 
-        $result = $this->repository->getAll();
+        $result = $this->repository->getAll(1);
 
         self::assertEquals($module, $result[0]);
     }
@@ -165,20 +177,78 @@ EOS;
     /**
      * @test
      */
-    public function insertAnModule()
+    public function insertModuleAndReturn()
     {
+        $userId = 1;
+
+        $module = new Module(
+            [
+                'generated' => 'true',
+                'code' => '0.0',
+                'shortname' => 'MUSTER',
+                'longname' => 'Muster-Modul',
+                'description' => 'Muster-Beschreibung',
+                'semester' => 1,
+                'ects' => 5,
+                'conditions' => '-',
+                'lecturer' => 'Mustermann',
+                'attempt' => 1,
+                'grade' => 0.0,
+            ]
+        );
+
+        $moduleData = [
+            'generated' => 'true',
+            'code' => '0.0',
+            'shortname' => 'MUSTER',
+            'longname' => 'Muster-Modul',
+            'description' => 'Muster-Beschreibung',
+            'semester' => 1,
+            'ects' => 5,
+            'conditions' => '-',
+            'lecturer' => 'Mustermann',
+            'attempt' => 1,
+            'grade' => 0.0,
+        ];
+
+        $this->db->expects(self::once())
+            ->method('lastInsertId')
+            ->willReturn(1)
+        ;
+
+        $result = $this->repository->insertModuleAndReturn($userId, $module);
+
+        self::assertEquals(1, $result->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function insertModule()
+    {
+        $moduleRawData = [
+            'generated' => 'true',
+            'code' => '0.0',
+            'shortname' => 'MUSTER',
+            'longname' => 'Muster-Modul',
+            'description' => 'Muster-Beschreibung',
+            'semester' => 1,
+            'ects' => 5,
+            'conditions' => '-',
+            'lecturer' => 'Mustermann',
+            'attempt' => 1,
+            'grade' => 0.0,
+        ];
+
         $moduleData = [
             'generated' => true,
             'code' => '0.0',
-            'shortname' => 'TEST1',
-            'longname' => 'Test-Modul-1',
-            'description' => 'Test-Modul-1-Beschreibung',
+            'shortname' => 'MUSTER',
+            'longname' => 'Muster-Modul',
+            'description' => 'Muster-Beschreibung',
             'semester' => 1,
-            'ects' => 3,
+            'ects' => 5,
             'conditions' => '-',
-            'lecturer' => null,
-            'attempt' => null,
-            'grade' => null,
         ];
 
         $this->db->expects(self::once())
@@ -186,30 +256,44 @@ EOS;
             ->with('`moduls`', $moduleData)
         ;
 
+        $this->repository->insertModule($moduleRawData);
+    }
+
+    /**
+     * @test
+     */
+    public function insertUserModuleRelation()
+    {
+        $userId = 1;
+
+        $moduleRawData = [
+            'id' => 123,
+            'generated' => 'true',
+            'code' => '0.0',
+            'shortname' => 'MUSTER',
+            'longname' => 'Muster-Modul',
+            'description' => 'Muster-Beschreibung',
+            'semester' => 1,
+            'ects' => 5,
+            'conditions' => '-',
+            'lecturer' => 'Mustermann',
+            'attempt' => 1,
+            'grade' => 0.0,
+        ];
+
+        $moduleData = [
+            'user_id' => 1,
+            'module_id' => 123,
+            'lecturer' => 'Mustermann',
+            'attempt' => 1,
+            'grade' => 0.0,
+        ];
+
         $this->db->expects(self::once())
-            ->method('lastInsertId')
-            ->willReturn(1)
+            ->method('insert')
+            ->with('`users_moduls`', $moduleData)
         ;
 
-        $module = new Module(
-            [
-                'id' => 1,
-                'generated' => true,
-                'code' => '0.0',
-                'shortname' => 'TEST1',
-                'longname' => 'Test-Modul-1',
-                'description' => 'Test-Modul-1-Beschreibung',
-                'semester' => 1,
-                'ects' => 3,
-                'conditions' => '-',
-                'lecturer' => null,
-                'attempt' => null,
-                'grade' => null,
-            ]
-        );
-
-        $this->repository->save($module);
-
-        self::assertEquals(1, $module->getId());
+        $this->repository->insertUserModuleRelation($userId, $moduleRawData);
     }
 }

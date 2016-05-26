@@ -26,8 +26,12 @@ class UserServiceProvider implements ServiceProviderInterface
     {
         /** @var UserRepository $repo */
         $repo = $app['repo.user'];
-        $repo->dropTable();
-        $repo->createTable();
-        $repo->createTestData();
+//        $repo->dropTable();
+//        $repo->createTable();
+//        $repo->createTestData();
+//
+//        $repo->dropTableUsersToModuls();
+//        $repo->createTableUsersToModuls();
+//        $repo->createTestDataUsersToModuls();
     }
 }

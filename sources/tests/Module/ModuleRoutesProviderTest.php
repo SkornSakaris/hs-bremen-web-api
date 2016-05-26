@@ -23,10 +23,11 @@ class ModuleRoutesProviderTest extends \PHPUnit_Framework_TestCase
         $provider = new ModuleRoutesProvider();
 
         $controllerFactory = $this->prophesize(ControllerCollection::class);
-        $controllerFactory->get('/', 'service.module:getList')->shouldBeCalled();
-        $controllerFactory->get('/{moduleId}', 'service.module:getDetails')->shouldBeCalled();
-        $controllerFactory->post('/', 'service.module:createModule')->shouldBeCalled();
-        $controllerFactory->put('/{moduleId}', 'service.module:changeModule')->shouldBeCalled();
+        $controllerFactory->get('/', 'service.module:getAllModuls')->shouldBeCalled();
+        $controllerFactory->post('/', 'service.module:createNewModule')->shouldBeCalled();
+        $controllerFactory->get('/{moduleId}', 'service.module:getModuleById')->shouldBeCalled();
+        $controllerFactory->put('/{moduleId}', 'service.module:changeModuleById')->shouldBeCalled();
+        $controllerFactory->delete('/{moduleId}', 'service.module:deleteModuleById')->shouldBeCalled();
 
         $app = new Application();
         $app['controllers_factory'] = $controllerFactory->reveal();

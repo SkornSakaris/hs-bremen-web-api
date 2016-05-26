@@ -3,6 +3,7 @@
 namespace HsBremen\WebApi\Module;
 
 use HsBremen\WebApi\Entity\Module;
+use HsBremen\WebApi\Entity\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,8 @@ class ModuleService
     public function __construct(ModuleRepository $moduleRepository)
     {
         $this->moduleRepository = $moduleRepository;
-        $this->templateName = 'module.html.twig';
+//        $this->templateName = 'module.html.twig';
+        $this->templateName = 'dummy.html.twig';
     }
 
     /**
@@ -37,27 +39,24 @@ class ModuleService
      *
      * @param Request $request
      * @param Application $app
+     *
      * @return JsonResponse
      */
     public function getAllModuls(Request $request, Application $app)
     {
-//        $token = $app['security.token_storage']->getToken();
-//        if (null !== $token) {
-//            $user = $token->getUser();
-//        }
-//        echo $user . '<br>';
-//        var_dump($token);
-
         $result = null;
-        $data = $this->moduleRepository->getAll();
+        $userId = $this->getUserIdFromToken($app);
+        $data = $this->moduleRepository->getAll($userId);
 
         if (0 === strpos($request->headers->get('Accept'), 'application/json'))
         {
             $result = new JsonResponse($data, 200);
         }
-        if (0 === strpos($request->headers->get('Accept'), 'text/html'))
+        elseif (0 === strpos($request->headers->get('Accept'), 'text/html'))
         {
-            $result = new Response($app['twig']->render($this->templateName, $data), 200);
+            $sortedData['moduls'] = $this->sortResultForTemplate($data);
+            $sortedData['quantity'] = count($data);
+            $result = new Response($app['twig']->render($this->templateName, $sortedData), 200);
         }
 
         return $result;
@@ -67,46 +66,146 @@ class ModuleService
      * GET /module/{moduleId}
      *
      * @param $moduleId
+     * @param Request $request
+     * @param Application $app
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function getModuleById($moduleId)
+    public function getModuleById($moduleId, Request $request, Application $app)
     {
-        return new JsonResponse($this->moduleRepository->getById($moduleId));
+        $result = null;
+
+        $userId = $this->getUserIdFromToken($app);
+        $data = $this->moduleRepository->getById($userId, $moduleId);
+
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $result = new JsonResponse($data, 200);
+        }
+        else
+        {
+            $sortedData['module'] = $data;
+            $result = new Response($app['twig']->render($this->templateName, $sortedData), 200);
+        }
+
+        return $result;
     }
 
     /**
      * POST /module
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Application $app
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function createNewModule(Request $request)
+    public function createNewModule(Request $request, Application $app)
     {
+        $result = null;
+        $userId = $this->getUserIdFromToken($app);
+
         $postData = $request->request->all();
         unset($postData['id']);
 
-        $module = Module::createFromArray($postData);
+        $module = new Module($postData);
+        $data = $this->moduleRepository->insertModuleAndReturn($userId, $module);
 
-        $this->moduleRepository->save($module);
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $result = new JsonResponse($data, 201);
+        }
+        else
+        {
+            $sortedData['module'] = $data;
+            $result = new Response($app['twig']->render($this->templateName, $sortedData), 201);
+        }
 
-        return new JsonResponse($module, 201);
+        return $result;
     }
 
     /**
      * PUT /module/{moduleId}
      *
+     * @param int $moduleId
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Application $app
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function changeModuleById(Request $request)
+    public function changeModuleById($moduleId, Request $request, Application $app)
     {
-        $module = new Module(1);
-        $newId = $request->request->get('id', 0);
-        $module->setId($newId);
+        $result = null;
+        $userId = $this->getUserIdFromToken($app);
 
-        return new JsonResponse($module);
+        $postData = $request->request->all();
+        $postData['id'] = $moduleId;
+
+        $module = new Module($postData);
+        $data = $this->moduleRepository->updateModuleById($userId, $module);
+
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $result = new JsonResponse($data, 201);
+        }
+        else
+        {
+            $sortedData['module'] = $data;
+            $result = new Response($app['twig']->render($this->templateName, $sortedData), 201);
+        }
+
+        return $result;
+    }
+
+    /**
+     * DELETE /module/[moduleId}
+     *
+     * @param $moduleId
+     * @param Request $request
+     * @param Application $app
+     *
+     * @return null|JsonResponse|Response
+     */
+    public function removeModuleById($moduleId, Request $request, Application $app)
+    {
+        $result = null;
+
+        $data = $this->moduleRepository->deleteModuleById($moduleId);
+
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $result = new JsonResponse($data, 201);
+        }
+        else
+        {
+            $sortedData['module'] = $data;
+            $result = new Response($app['twig']->render($this->templateName, $sortedData), 201);
+        }
+
+        return $result;
+    }
+
+    private function getUserIdFromToken(Application $app)
+    {
+        $token = $app['security.token_storage']->getToken();
+        if (null !== $token) {
+            $user = $token->getUser();
+        }
+        return $user->getID();
+    }
+
+    /**
+     * @param Module[] $data
+     * @return null
+     */
+    private function sortResultForTemplate($data)
+    {
+        $sortedData = null;
+
+        foreach ($data as $module)
+        {
+            $sortedData[$module->getSemester()][] = $module;
+        }
+
+        return $sortedData;
     }
 }

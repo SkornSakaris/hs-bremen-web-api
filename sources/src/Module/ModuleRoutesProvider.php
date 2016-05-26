@@ -40,25 +40,14 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     tags={"module"},
          *     @SWG\Response(
          *         response="200",
-         *         description="An example resource"
-         *     )
+         *         description="Listet alle Module des angemeldeten Benutzer auf"
+         *     ),
+         *     security={
+         *         "modulmanager_auth": {"write:moduls", "read:moduls"}
+         *     }
          * )
          */
         $controllers->get('/', 'service.module:getAllModuls');
-
-        /**
-         * @SWG\Get(
-         *     path="/module/{id}",
-         *     tags={"module"},
-         *     @SWG\Parameter(ref="#/parameters/id"),
-         *     @SWG\Response(
-         *         response="200",
-         *         description="An example resource",
-         *         @SWG\Schema(ref="#/definitions/module")
-         *     )
-         * )
-         */
-        $controllers->get('/{moduleId}', 'service.module:getModuleById');
 
         /**
          * @SWG\Post(
@@ -71,11 +60,25 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     ),
          *     @SWG\Response(
          *         response="201",
-         *         description="An example resource")
+         *         description="Neues Modul für den angemeldeten Benutzer erstellt")
          *     )
          * )
          */
         $controllers->post('/', 'service.module:createNewModule');
+
+        /**
+         * @SWG\Get(
+         *     path="/module/{id}",
+         *     tags={"module"},
+         *     @SWG\Parameter(ref="#/parameters/id"),
+         *     @SWG\Response(
+         *         response="200",
+         *         description="Öffnet das ausgewählte Modul des angemeldeten Benutzers",
+         *         @SWG\Schema(ref="#/definitions/module")
+         *     )
+         * )
+         */
+        $controllers->get('/{moduleId}', 'service.module:getModuleById');
 
         /**
          * @SWG\Put(
@@ -83,8 +86,8 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     path="/module/{id}",
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
-         *          response="200",
-         *          description="An example resource",
+         *          response="201",
+         *          description="Änderungen am Modul des angemeldeten Benutzers erfolgreich",
          *          @SWG\Schema(ref="#/definitions/module")
          *     )
          * )
@@ -98,11 +101,11 @@ class ModuleRoutesProvider implements ControllerProviderInterface
          *     @SWG\Parameter(ref="#/parameters/id"),
          *     @SWG\Response(
          *          response="200",
-         *          description="An example resource"
+         *          description="Löscht das ausgewählte Modul des angemeldeten Benutzers"
          *     )
          * )
          */
-        $controllers->delete('/{moduleId}', 'service.module:changeModule');
+        $controllers->delete('/{moduleId}', 'service.module:removeModuleById');
 
         return $controllers;
     }

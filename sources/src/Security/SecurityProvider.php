@@ -7,6 +7,30 @@ use Silex\Application;
 use Silex\Provider\SecurityServiceProvider;
 use Silex\ServiceProviderInterface;
 
+
+
+/**
+ * Class SecurityProvider
+ * @package HsBremen\WebApi\Security
+ *
+ * @SWG\SecurityScheme(
+ *     securityDefinition="jsonWebToken",
+ *     type="apiKey",
+ *     in="header",
+ *     name="PHPSESSID"
+ * )
+ *
+ * @SWG\SecurityScheme(
+ *     securityDefinition="modulmanager_auth",
+ *     type="oauth2",
+ *     authorizationUrl="http://web-api.vm/login",
+ *     flow="implicit",
+ *     scopes={
+ *         "read:modules" : "read your moduls",
+ *         "write:modules" : "modify moduls in your account"
+ *     }
+ * )
+ */
 class SecurityProvider implements ServiceProviderInterface
 {
 
