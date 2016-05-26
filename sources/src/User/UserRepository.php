@@ -47,7 +47,7 @@ EOS;
 
     public function dropTable()
     {
-        $sql = "DROP TABLE `{$this->getTableName()}`";
+        $sql = "DROP TABLE `{$this->getTableName()}` IF EXISTS";
         $this->connection->exec($sql);
     }
 
@@ -95,7 +95,7 @@ EOS;
 
     public function dropTableUsersToModuls()
     {
-        $sql = "DROP TABLE `users_moduls`";
+        $sql = "DROP TABLE `users_moduls` IF EXISTS";
         $this->connection->exec($sql);
     }
 

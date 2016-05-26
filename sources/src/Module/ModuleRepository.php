@@ -33,7 +33,7 @@ class ModuleRepository
 
     public function dropTable()
     {
-        $sql = "DROP TABLE `{$this->getTableName()}`";
+        $sql = "DROP TABLE `{$this->getTableName()}` IF EXISTS";
         $this->connection->exec($sql);
     }
 
@@ -267,7 +267,7 @@ EOS;
      */
     public function deleteUserModuleRelation($moduleId)
     {
-        return $this->connection->delete("`{$this->getTableName()}`", ['module_id' => $moduleId]);
+        return $this->connection->delete("`users_moduls`", ['module_id' => $moduleId]);
     }
 
     /**
@@ -285,9 +285,5 @@ EOS;
     {
         $this->tableName = $tableName;
     }
-
-
-
-
 
 }

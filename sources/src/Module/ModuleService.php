@@ -184,6 +184,13 @@ class ModuleService
         return $result;
     }
 
+    /**
+     * Gibt die Id des angemeldeten Benutzers zurück
+     *
+     * @param Application $app
+     *
+     * @return mixed
+     */
     private function getUserIdFromToken(Application $app)
     {
         $token = $app['security.token_storage']->getToken();
