@@ -25,7 +25,7 @@ class ModuleServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         /** @var ModuleRepository $repo */
-        $repo = $app['repo.module'];
+//        $repo = $app['repo.module'];
 //        $repo->dropTable();
 //        $repo->createTable();
 //        $repo->createTestData();

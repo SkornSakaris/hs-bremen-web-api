@@ -8,6 +8,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ModuleService
 {
@@ -193,6 +194,10 @@ class ModuleService
      */
     private function getUserIdFromToken(Application $app)
     {
+        /**
+         * @var TokenInterface $token
+         * @var User $user
+         */
         $token = $app['security.token_storage']->getToken();
         if (null !== $token) {
             $user = $token->getUser();

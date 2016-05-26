@@ -5,7 +5,6 @@ namespace HsBremen\WebApi\Module;
 use Doctrine\DBAL\Connection;
 use HsBremen\WebApi\Database\DatabaseException;
 use HsBremen\WebApi\Entity\Module;
-use HsBremen\WebApi\Entity\User;
 use Silex\Application;
 
 class ModuleRepository
