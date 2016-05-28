@@ -25,7 +25,7 @@ class UserServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         /** @var UserRepository $repo */
-        $repo = $app['repo.user'];
+//        $repo = $app['repo.user'];
 //        $repo->dropTable();
 //        $repo->createTable();
 //        $repo->createTestData();

@@ -47,13 +47,13 @@ class ModuleService
     {
         $result = null;
         $userId = $this->getUserIdFromToken($app);
-        $data = $this->moduleRepository->getAll($userId);
+        $data = $this->moduleRepository->getAllModuls($userId);
 
         if (0 === strpos($request->headers->get('Accept'), 'application/json'))
         {
             $result = new JsonResponse($data, 200);
         }
-        elseif (0 === strpos($request->headers->get('Accept'), 'text/html'))
+        else
         {
             $sortedData['moduls'] = $this->sortResultForTemplate($data);
             $sortedData['quantity'] = count($data);
@@ -77,7 +77,7 @@ class ModuleService
         $result = null;
 
         $userId = $this->getUserIdFromToken($app);
-        $data = $this->moduleRepository->getById($userId, $moduleId);
+        $data = $this->moduleRepository->getModuleById($userId, $moduleId);
 
         if (0 === strpos($request->headers->get('Accept'), 'application/json'))
         {
@@ -142,7 +142,7 @@ class ModuleService
         $postData['id'] = $moduleId;
 
         $module = new Module($postData);
-        $data = $this->moduleRepository->updateModuleById($userId, $module);
+        $data = $this->moduleRepository->updateModuleByIdAndReturn($userId, $module);
 
         if (0 === strpos($request->headers->get('Accept'), 'application/json'))
         {

@@ -79,7 +79,7 @@ EOS;
         }
     }
 
-    public function getAll($userId)
+    public function getAllModuls($userId)
     {
         $sql = <<<EOS
 SELECT m.*, um.lecturer, um.attempt, um.grade
@@ -99,7 +99,7 @@ EOS;
         return $result;
     }
 
-    public function getById($userId, $moduleId)
+    public function getModuleById($userId, $moduleId)
     {
         $sql = <<<EOS
 SELECT m.*, um.lecturer, um.attempt, um.grade
@@ -192,7 +192,7 @@ EOS;
      *
      * @throws DatabaseException
      */
-    public function updateModuleById($userId, $module)
+    public function updateModuleByIdAndReturn($userId, $module)
     {
         $data = $module->jsonSerialize();
 
@@ -275,14 +275,6 @@ EOS;
     public function getTableName()
     {
         return $this->tableName;
-    }
-
-    /**
-     * @param string $tableName
-     */
-    public function setTableName($tableName)
-    {
-        $this->tableName = $tableName;
     }
 
 }

@@ -38,7 +38,7 @@ class UserRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->get('/', 'service.user:getUserList');
+        $controllers->get('/', 'service.user:getAllUsers');
 
         /**
          * @SWG\Post(

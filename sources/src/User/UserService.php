@@ -2,13 +2,24 @@
 
 namespace HsBremen\WebApi\User;
 
+use HsBremen\WebApi\Entity\User;
+use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserService
 {
-
-    /** @var  UserRepository $userRepository*/
+    /**
+     * @var UserRepository $userRepository
+     */
     private $userRepository;
+
+    /**
+     * @var string $templateName
+     */
+    private $templateName;
 
     /**
      * UserService constructor.
@@ -19,30 +30,169 @@ class UserService
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->templateName = 'dummy.html.twig';
     }
 
-    public function getUserList()
+    public function getAllUsers(Request $request, Application $app)
     {
-        return new JsonResponse($this->userRepository->getAll());
+        $result = null;
+        $code = null;
+        $data = null;
+
+        $code = 200;
+        $data['users'] = $this->userRepository->getAllUsers();
+
+        return $this->createResponse($code, $data, $request, $app);
     }
 
-    public function createNewUser()
+    public function getUserById($userId, Request $request, Application $app)
+    {
+        $result = null;
+        $code = null;
+        $data = null;
+
+        $code = 200;
+        $data['user'] = $this->userRepository->getUserById($userId);
+
+    return $this->createResponse($code, $data, $request, $app);
+    }
+
+    public function createNewUser(Request $request, Application $app)
+    {
+        $code = null;
+        $data = null;
+        $postData = null;
+        $validatedData = null;
+
+        $postData = $request->request->all();
+        $validatedData = $this->validateNewUser($postData);
+
+        if ($validatedData['code'] === 201)
+        {
+            $code = $validatedData['code'];
+            $data = $this->userRepository->insertNewUserAndReturn($postData);
+        }
+        else
+        {
+            $code = $validatedData['code'];
+            $data = $validatedData['error'];
+        }
+
+        $response = $this->createResponse($code, $data, $request, $app);
+
+        return $response;
+    }
+
+    public function changeUserById($userId, Request $request, Application $app)
+    {
+        $code = null;
+        $data = null;
+        $postData = null;
+        $validatedData = null;
+
+        $postData = $request->request->all();
+        $postData['id'] = $userId;
+        $validatedData = $this->validateUpdateUser($postData);
+
+        if ($validatedData['code'] === 201)
+        {
+            $code = $validatedData['code'];
+            $data = $this->userRepository->updateUserByIdAndReturn($validatedData['user']);
+        }
+        else
+        {
+            $code = $validatedData['code'];
+            $data = $validatedData['error'];
+        }
+
+        return $this->createResponse($code, $data, $request, $app);
+    }
+
+    public function removeUserById($userId)
     {
 
     }
 
-    public function getUserById()
+    public function validateNewUser($postData)
     {
+        $result = null;
 
+        if (count($postData) > 3)
+        {
+            $result['code'] = 412;
+            $result['error'] = "Zuviele Benutzerdaten gesendet";
+        }
+        elseif (count($postData) < 3)
+        {
+            $result['code']  = 412;
+            $result['error'] = "Zu wenige Benutzerdaten gesendet";
+        }
+        elseif ($postData['password'] !== $postData['passwordConf'])
+        {
+            $result['code']  = 412;
+            $result['error'] = "Passwörter stimmen nicht überein";
+        }
+        else
+        {
+            $result['code']  = 201;
+        }
+
+        return $result;
     }
 
-    public function changeUserById()
+    public function validateUpdateUser($postData)
     {
+        $result = null;
 
+        $result['code'] = 201;
+
+        if (array_key_exists('id', $postData))
+        {
+            $result['user']['id'] = $postData['id'];
+        }
+        if (array_key_exists('newUsername', $postData))
+        {
+            $result['user']['username'] = $postData['newUsername'];
+        }
+        if (array_key_exists('newPassword', $postData) && array_key_exists('newPasswordConf', $postData))
+        {
+            if ($postData['newPassword'] !== $postData['newPasswordConf'])
+            {
+                $result['code'] = 412;
+                $result['error'] = "Passwörter stimmen nicht überein";
+            }
+            else
+            {
+                $result['user']['password'] = $postData['newPassword'];
+            }
+        }
+        elseif (!array_key_exists('newPassword', $postData) && array_key_exists('newPasswordConf', $postData))
+        {
+            $result['code'] = 412;
+            $result['error'] = "Eingabe für Passwort fehlt";
+
+        }
+        elseif (array_key_exists('newPassword', $postData) && !array_key_exists('newPasswordConf', $postData))
+        {
+            $result['code'] = 412;
+            $result['error'] = "Eingabe für Passwortwiederholung fehlt";
+        }
+
+        return $result;
     }
 
-    public function deleteUserById()
+    public function createResponse($code, $data, Request $request, Application $app)
     {
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $response = new JsonResponse($data, $code);
+        }
+        else
+        {
+            $response = new Response($app['twig']->render($this->templateName, $data), $code);
+        }
 
+        return $response;
     }
+
 }

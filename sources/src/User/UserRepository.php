@@ -3,7 +3,9 @@
 namespace HsBremen\WebApi\User;
 
 use Doctrine\DBAL\Connection;
+use HsBremen\WebApi\Database\DatabaseException;
 use HsBremen\WebApi\Entity\User;
+use Silex\Application;
 
 class UserRepository
 {
@@ -25,24 +27,6 @@ class UserRepository
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-    }
-
-    public function getAll()
-    {
-        $sql = <<<EOS
-SELECT u.*
-FROM `{$this->getTableName()}` u
-EOS;
-
-        $users = $this->connection->fetchAll($sql);
-
-        $result = [];
-
-        foreach ($users as $row) {
-            $result[] = new User($row['id'], $row['username'], $row['password'], explode(',', $row['roles']), true, true, true, true);
-        }
-
-        return $result;
     }
 
     public function dropTable()
@@ -119,6 +103,78 @@ EOS;
         }
     }
 
+    public function getAllUsers()
+    {
+        $sql = <<<EOS
+SELECT u.*
+FROM `{$this->getTableName()}` u
+EOS;
+
+        $users = $this->connection->fetchAll($sql);
+
+        $result = [];
+
+        foreach ($users as $row) {
+            $result[] = new User($row['id'], $row['username'], $row['password'], explode(',', $row['roles']), true, true, true, true);
+        }
+
+        return $result;
+    }
+
+    public function getUserById($userId)
+    {
+        $sql = <<<EOS
+SELECT u.*
+FROM `{$this->getTableName()}` u
+WHERE u.id = :id
+EOS;
+        $users = $this->connection->fetchAll($sql, ['id' => $userId]);
+
+        if (count($users) === 0) {
+            throw new DatabaseException(
+                sprintf('User with id "%d" not exists!', $userId)
+            );
+        }
+
+        $userData = $users[0];
+
+        return new User($userData['id'], $userData['username'], $userData['password'], explode(',', $userData['roles']), true, true, true, true);
+    }
+
+
+    /**
+     * @param array $userData
+     * @return User
+     */
+    public function insertNewUserAndReturn($userData)
+    {
+        unset($userData['passwordConf']);
+        $this->connection->insert("`{$this->getTableName()}`", $userData);
+
+        $userId = $this->connection->lastInsertId();
+        $userData['id'] = $userId;
+        $userData['roles'] = 'USER_ROLE';
+
+        return new User($userData['id'], $userData['username'], $userData['password'], explode(',', $userData['roles']), true, true, true, true);
+    }
+
+    public function updateUserByIdAndReturn($userData)
+    {
+        $userId = $userData['id'];
+        unset($userData['id']);
+
+        $this->connection->update("`{$this->getTableName()}`", $userData, ['id' => $userId]);
+
+        $user = $this->getUserById($userId);
+
+        return new User($user->getId(), $user->getUsername(), $user->getPassword(), $user->getRoles(), true, true, true, true);
+    }
+
+    public function deleteUserById($userId)
+    {
+
+    }
+
     /**
      * @return string
      */
@@ -126,4 +182,6 @@ EOS;
     {
         return $this->tableName;
     }
+
+
 }
