@@ -130,8 +130,6 @@ EOS;
      */
     public function insertModuleAndReturn($userId, $moduleData)
     {
-        //$data = $module->jsonSerialize();
-
         $this->insertModule($moduleData);
 
         $moduleId = $this->connection->lastInsertId();

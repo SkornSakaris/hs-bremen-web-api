@@ -208,54 +208,68 @@ class ModuleService
             $result['code'] = 412;
             $result['error'] = "Der Eingabeparameter 'longname' für Modul-Bezeichnung st nicht angegeben (erforderlich)";
         }
-        else
-        {
-            $result['code']  = 201;
+        else {
+            $result['code'] = 201;
             $result['module']['generated'] = 'true';
             $result['module']['shortname'] = $postData['shortname'];
             $result['module']['longname'] = $postData['longname'];
-        }
 
-        // optional, aber relevante Parameter zum Anlegen eines neuen Moduls in der Datenbank
-        if (false === array_key_exists('code', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'code' für Modul-Code ist nicht angegeben (optional)";
-            $result['module']['code'] = '';
-        }
-        elseif (false === array_key_exists('description', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'description' für Modul-Beschreibung ist nicht angegeben (optional)";
-            $result['module']['description'] = '';
-        }
-        elseif (false === array_key_exists('semester', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'semester' für Modul-Semester ist nicht angegeben (optional)";
-            $result['module']['semester'] = '';
-        }
-        elseif (false === array_key_exists('ects', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'ects' für Modul-ECTS ist nicht angegeben (optional)";
-            $result['module']['ects'] = '';
-        }
-        elseif (false === array_key_exists('conditions', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'conditions' für Modul-Vorraussetzung ist nicht angegeben (optional)";
-            $result['module']['conditions'] = '';
-        }
-        elseif (false === array_key_exists('lecturer', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'lecturer' für Modul-Dozent ist nicht angegeben (optional)";
-            $result['module']['lecturer'] = '';
-        }
-        elseif (false === array_key_exists('attempt', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'attempt' für Modul-Versuch ist nicht angegeben (optional)";
-            $result['module']['attempt'] = '';
-        }
-        elseif (false === array_key_exists('grade', $postData))
-        {
-            $result['warning'][] = "Der Eingabeparameter 'grade' für Modul-Note ist nicht angegeben (optional)";
-            $result['module']['grade'] = '';
+            // optional, aber relevante Parameter zum Anlegen eines neuen Moduls in der Datenbank
+            if (false === array_key_exists('code', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'code' für Modul-Code ist nicht angegeben (optional)";
+                $result['module']['code'] = '';
+            } else {
+                $result['module']['code'] = $postData['code'];
+            }
+
+            if (false === array_key_exists('description', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'description' für Modul-Beschreibung ist nicht angegeben (optional)";
+                $result['module']['description'] = '';
+            } else {
+                $result['module']['description'] = $postData['description'];
+            }
+
+            if (false === array_key_exists('semester', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'semester' für Modul-Semester ist nicht angegeben (optional)";
+                $result['module']['semester'] = '';
+            } else {
+                $result['module']['semester'] = $postData['semester'];
+            }
+
+            if (false === array_key_exists('ects', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'ects' für Modul-ECTS ist nicht angegeben (optional)";
+                $result['module']['ects'] = '';
+            } else {
+                $result['module']['ects'] = $postData['ects'];
+            }
+
+            if (false === array_key_exists('conditions', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'conditions' für Modul-Vorraussetzung ist nicht angegeben (optional)";
+                $result['module']['conditions'] = '';
+            } else {
+                $result['module']['conditions'] = $postData['conditions'];
+            }
+
+            if (false === array_key_exists('lecturer', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'lecturer' für Modul-Dozent ist nicht angegeben (optional)";
+                $result['module']['lecturer'] = '';
+            } else {
+                $result['module']['lecturer'] = $postData['lecturer'];
+            }
+
+            if (false === array_key_exists('attempt', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'attempt' für Modul-Versuch ist nicht angegeben (optional)";
+                $result['module']['attempt'] = '';
+            } else {
+                $result['module']['attempt'] = $postData['attempt'];
+            }
+
+            if (false === array_key_exists('grade', $postData)) {
+                $result['warning'][] = "Der Eingabeparameter 'grade' für Modul-Note ist nicht angegeben (optional)";
+                $result['module']['grade'] = '';
+            } else {
+                $result['module']['grade'] = $postData['grade'];
+            }
         }
 
         return $result;

@@ -130,7 +130,7 @@ EOS;
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 7, 'Herr Assmann', 1, 3.3)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 8, 'Herr LilaRucksack', 1, 2.7)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 9, 'Herr Mosemann', 1, 2.7)";
-        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 10, 'Herr Breyer', 1, 4.0)";2
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 10, 'Herr Breyer', 1, 4.0)";
 
         foreach ($sql as $query)
         {
