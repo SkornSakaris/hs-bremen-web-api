@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use HsBremen\WebApi\Database\DatabaseException;
 use HsBremen\WebApi\Entity\User;
 use Silex\Application;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class UserRepository
 {
@@ -31,7 +32,7 @@ class UserRepository
 
     public function dropTable()
     {
-        $sql = "DROP TABLE `{$this->getTableName()}` IF EXISTS";
+        $sql = "DROP TABLE IF EXISTS `{$this->getTableName()}`";
         $this->connection->exec($sql);
     }
 
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `{$this->getTableName()}` (
     username VARCHAR(255) NOT NULL,
     salt VARCHAR(255),
     password VARCHAR(255) NOT NULL,
-    roles VARCHAR(255) NOT NULL
+    roles VARCHAR(255) DEFAULT 'ROLE_USER' NOT NULL
 )
 EOS;
         $this->connection->exec($sql);
@@ -55,6 +56,13 @@ EOS;
         $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Andi', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
         $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Nils', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
         $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Ole', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 5', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 6', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 7', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 8', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 9', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 10', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
 
         foreach ($sql as $query)
         {
@@ -79,7 +87,7 @@ EOS;
 
     public function dropTableUsersToModuls()
     {
-        $sql = "DROP TABLE `users_moduls` IF EXISTS";
+        $sql = "DROP TABLE IF EXISTS `users_moduls`";
         $this->connection->exec($sql);
     }
 
@@ -148,12 +156,15 @@ EOS;
      */
     public function insertNewUserAndReturn($userData)
     {
+        $encoder = new MessageDigestPasswordEncoder();
+
         unset($userData['passwordConf']);
+        $userData['password'] = $encoder->encodePassword($userData['password'], '');
+
         $this->connection->insert("`{$this->getTableName()}`", $userData);
 
         $userId = $this->connection->lastInsertId();
         $userData['id'] = $userId;
-        $userData['roles'] = 'USER_ROLE';
 
         return new User($userData['id'], $userData['username'], $userData['password'], explode(',', $userData['roles']), true, true, true, true);
     }
@@ -172,7 +183,7 @@ EOS;
 
     public function deleteUserById($userId)
     {
-
+        $this->connection->delete("`{$this->getTableName()}`", ['id' => $userId]);
     }
 
     /**

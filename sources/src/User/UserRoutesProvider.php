@@ -122,7 +122,7 @@ class UserRoutesProvider implements ControllerProviderInterface
          *     )
          * )
          */
-        $controllers->delete('/{userId}', 'service.user:deleteUserById');
+        $controllers->delete('/{userId}', 'service.user:removeUserById');
 
         return $controllers;
     }

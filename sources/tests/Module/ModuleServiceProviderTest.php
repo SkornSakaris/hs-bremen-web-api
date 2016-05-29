@@ -43,4 +43,5 @@ class ModuleServiceProviderTest extends \PHPUnit_Framework_TestCase
         self::assertArrayHasKey('service.module', $app);
         self::assertInstanceOf(ModuleService::class, $app['service.module']);
     }
+
 }

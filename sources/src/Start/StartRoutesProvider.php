@@ -45,6 +45,30 @@ class StartRoutesProvider implements ControllerProviderInterface
          */
         $controllers->get('/login', 'service.start:getLogin');
 
+        /**
+         * @SWG\Get(
+         *     path="/registration",
+         *     tags={"start"},
+         *     @SWG\Response(
+         *         response="200",
+         *         description="An example resource"
+         *     )
+         * )
+         */
+        $controllers->get('/registration', 'service.start:getRegistration');
+
+        /**
+         * @SWG\Get(
+         *     path="/newmodule",
+         *     tags={"start"},
+         *     @SWG\Response(
+         *         response="200",
+         *         description="An example resource"
+         *     )
+         * )
+         */
+        $controllers->get('/newmodule', 'service.start:getNewModule');
+
         return $controllers;
     }
 }

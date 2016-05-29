@@ -113,7 +113,7 @@ EOS;
             ->willReturn($moduls)
         ;
 
-        self::assertEquals($module, $this->repository->getById(1, 1));
+        self::assertEquals($module, $this->repository->getModuleById(1, 1));
     }
 
     /**
@@ -169,7 +169,7 @@ EOS;
             ->willReturn($moduls)
         ;
 
-        $result = $this->repository->getAll(1);
+        $result = $this->repository->getAllModuls(1);
 
         self::assertEquals($module, $result[0]);
     }

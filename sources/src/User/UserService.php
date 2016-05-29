@@ -2,12 +2,10 @@
 
 namespace HsBremen\WebApi\User;
 
-use HsBremen\WebApi\Entity\User;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserService
 {
@@ -70,12 +68,12 @@ class UserService
         if ($validatedData['code'] === 201)
         {
             $code = $validatedData['code'];
-            $data = $this->userRepository->insertNewUserAndReturn($postData);
+            $data['user'] = $this->userRepository->insertNewUserAndReturn($validatedData['user']);
         }
         else
         {
             $code = $validatedData['code'];
-            $data = $validatedData['error'];
+            $data['error'] = $validatedData['error'];
         }
 
         $response = $this->createResponse($code, $data, $request, $app);
@@ -97,7 +95,7 @@ class UserService
         if ($validatedData['code'] === 201)
         {
             $code = $validatedData['code'];
-            $data = $this->userRepository->updateUserByIdAndReturn($validatedData['user']);
+            $data['user'] = $this->userRepository->updateUserByIdAndReturn($validatedData['user']);
         }
         else
         {
@@ -108,33 +106,62 @@ class UserService
         return $this->createResponse($code, $data, $request, $app);
     }
 
-    public function removeUserById($userId)
+    public function removeUserById($userId, Request $request, Application $app)
     {
+        $result = null;
+        $code = null;
+        $data = null;
 
+        $code = 201;
+        $data['message'] = "Benutzer mit der Id: $userId wurde erfolgreich gelöscht";
+        $this->userRepository->deleteUserById($userId);
+
+        return $this->createResponse($code, $data, $request, $app);
     }
 
+    /**
+     * Überprüfung ob notwendige Eingabeparameter vorhanden -> sonst Fehlercode und Error
+     * Überprüfung ob Passwortwiederholung indentisch -> sons Fehlercoe und Error
+     * Selektierung der für die 'createNewUser' notwendigen Parameter
+     *
+     * @param $postData
+     *
+     * @return null
+     */
     public function validateNewUser($postData)
     {
         $result = null;
 
-        if (count($postData) > 3)
+        if (false === array_key_exists('username', $postData))
         {
             $result['code'] = 412;
-            $result['error'] = "Zuviele Benutzerdaten gesendet";
+            $result['error'] = "Der Eingabeparameter 'username' ist nicht angegeben";
         }
-        elseif (count($postData) < 3)
+        elseif (false === array_key_exists('password', $postData))
         {
-            $result['code']  = 412;
-            $result['error'] = "Zu wenige Benutzerdaten gesendet";
+            $result['code'] = 412;
+            $result['error'] = "Der Eingabeparameter 'password' ist nicht angegeben";
+        }
+        elseif (false === array_key_exists('passwordConf', $postData))
+        {
+            $result['code'] = 412;
+            $result['error'] = "Der Eingabeparameter 'passwordConf' ist nicht angegeben";
         }
         elseif ($postData['password'] !== $postData['passwordConf'])
         {
             $result['code']  = 412;
-            $result['error'] = "Passwörter stimmen nicht überein";
+            $result['error'] = "Die Eingabeparamter 'password' und 'passwordConf' stimmen nicht überein";
         }
         else
         {
+            if (count($postData))
+            {
+                $result['warning'] = "Es werden unnötige Eingabeparameter angegeben (werden ignoriert)";
+            }
             $result['code']  = 201;
+            $result['user']['username'] = $postData['username'];
+            $result['user']['password'] = $postData['password'];
+            $result['user']['roles'] = 'ROLE_USER';
         }
 
         return $result;
@@ -166,13 +193,13 @@ class UserService
                 $result['user']['password'] = $postData['newPassword'];
             }
         }
-        elseif (!array_key_exists('newPassword', $postData) && array_key_exists('newPasswordConf', $postData))
+        elseif (false === array_key_exists('newPassword', $postData) && array_key_exists('newPasswordConf', $postData))
         {
             $result['code'] = 412;
             $result['error'] = "Eingabe für Passwort fehlt";
 
         }
-        elseif (array_key_exists('newPassword', $postData) && !array_key_exists('newPasswordConf', $postData))
+        elseif (array_key_exists('newPassword', $postData) && false === array_key_exists('newPasswordConf', $postData))
         {
             $result['code'] = 412;
             $result['error'] = "Eingabe für Passwortwiederholung fehlt";

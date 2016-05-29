@@ -32,7 +32,7 @@ class ModuleRepository
 
     public function dropTable()
     {
-        $sql = "DROP TABLE `{$this->getTableName()}` IF EXISTS";
+        $sql = "DROP TABLE IF EXISTS `{$this->getTableName()}`";
         $this->connection->exec($sql);
     }
 
