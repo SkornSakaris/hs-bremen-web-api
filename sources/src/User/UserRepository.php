@@ -93,6 +93,7 @@ EOS;
 
     public function createTestDataUsersToModuls()
     {
+        // Jannik
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 1, 'Herr Krug', 1, 3.7)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 2, 'Herr Trittin', 1, 3.5)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 3, 'Herr Mosemann', 1, 1.3)";
@@ -104,6 +105,32 @@ EOS;
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 8, 'Herr LilaRucksack', 1, 2.7)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 9, 'Herr Mosemann', 1, 2.7)";
         $sql[] = "INSERT INTO `users_moduls` VALUES(null, 1, 10, 'Herr Breyer', 1, 4.0)";
+
+        // Andi
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 1, 'Herr Krug', 1, 3.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 2, 'Herr Trittin', 1, 3.5)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 3, 'Herr Mosemann', 1, 1.3)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 4, 'Herr Mosemann', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 5, 'Herr Unknown', 1, 2.0)";
+
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 6, 'Herr Mevenkamp', 1, 3.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 7, 'Herr Assmann', 1, 3.3)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 8, 'Herr LilaRucksack', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 9, 'Herr Mosemann', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 2, 10, 'Herr Breyer', 1, 4.0)";
+
+        // Nils
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 1, 'Herr Krug', 1, 3.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 2, 'Herr Trittin', 1, 3.5)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 3, 'Herr Mosemann', 1, 1.3)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 4, 'Herr Mosemann', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 5, 'Herr Unknown', 1, 2.0)";
+
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 6, 'Herr Mevenkamp', 1, 3.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 7, 'Herr Assmann', 1, 3.3)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 8, 'Herr LilaRucksack', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 9, 'Herr Mosemann', 1, 2.7)";
+        $sql[] = "INSERT INTO `users_moduls` VALUES(null, 3, 10, 'Herr Breyer', 1, 4.0)";2
 
         foreach ($sql as $query)
         {
