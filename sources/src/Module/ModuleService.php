@@ -31,8 +31,8 @@ class ModuleService
     public function __construct(ModuleRepository $moduleRepository)
     {
         $this->moduleRepository = $moduleRepository;
-//        $this->templateName = 'module.html.twig';
-        $this->templateName = 'dummy.html.twig';
+        $this->templateName = 'module.html.twig';
+//        $this->templateName = 'dummy.html.twig';
     }
 
     /**
@@ -57,6 +57,7 @@ class ModuleService
         {
             $sortedData['moduls'] = $this->sortResultForTemplate($data);
             $sortedData['quantity'] = count($data);
+
             $result = new Response($app['twig']->render($this->templateName, $sortedData), 200);
         }
 

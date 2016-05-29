@@ -91,26 +91,28 @@
         <table class="table">
             <thead>
             <tr>
-            {% for i in 0..moduls|length %}
-                <th>Semester {{ i+1 }}</th>
+            {% for spalte in 1..moduls|length+1 %}
+                <th>Semester {{ spalte }}</th>
             {% endfor %}
-                <th><a href="#"><span class="glyphicon glyphicon-plus"></span> Semester</a></th>
             </tr>
             </thead>
             <tbody>
-            {% for i in 1..moduls|length %}
+            {% for zeile in 0..4 %}
                 <tr>
-                {% for module in moduls[i] %}
+                {% for spalte in 1..moduls|length %}
                     <td>
-                        <label>Id:</label> {{ module.id }} <br>
-                        <label>Code:</label> {{ module.code }} <br>
-                        <label>Kürzel:</label> {{ module.shortname }} <br>
-                        <label>Semester:</label> {{ module.semester }} <br>
-                        <label>Dozent:</label> {{ module.lecturer }} <br>
-                        <label>Versuch:</label> {{ module.attempt }} <br>
-                        <label>Note:</label> {{ module.grade }} <br>
+                        {% if moduls[spalte][zeile] is defined %}
+                            <label>Id:</label> {{ moduls[spalte][zeile].id }} <br>
+                            <label>Code:</label> {{ moduls[spalte][zeile].code }} <br>
+                            <label>Kürzel:</label> {{ moduls[spalte][zeile].shortname }} <br>
+                            <label>Semester:</label> {{ moduls[spalte][zeile].semester }} <br>
+                            <label>Dozent:</label> {{ moduls[spalte][zeile].lecturer }} <br>
+                            <label>Versuch:</label> {{ moduls[spalte][zeile].attempt }} <br>
+                            <label>Note:</label> {{ moduls[spalte][zeile].grade }} <br>
+                        {% endif %}
                     </td>
                 {% endfor %}
+                    <td><a href="#"><span class="glyphicon glyphicon-plus"></span> Modul</a></td>
                 </tr>
             {% endfor %}
             </tbody>

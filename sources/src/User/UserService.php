@@ -90,7 +90,7 @@ class UserService
 
         $postData = $request->request->all();
         $postData['id'] = $userId;
-        $validatedData = $this->validateUpdateUser($postData);
+        $validatedData = $this->validateChangeUser($postData);
 
         if ($validatedData['code'] === 201)
         {
@@ -167,7 +167,7 @@ class UserService
         return $result;
     }
 
-    public function validateUpdateUser($postData)
+    public function validateChangeUser($postData)
     {
         $result = null;
 
