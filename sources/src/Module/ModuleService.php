@@ -103,25 +103,33 @@ class ModuleService
     public function createNewModule(Request $request, Application $app)
     {
         $result = null;
+        $userId = null;
+        $data = null;
+        $code = null;
+        $validatedData = null;
+
         $userId = $this->getUserIdFromToken($app);
 
         $postData = $request->request->all();
         unset($postData['id']);
 
-        $module = new Module($postData);
-        $data = $this->moduleRepository->insertModuleAndReturn($userId, $module);
+        $validatedData = $this->validateNewModule($postData);
 
-        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        if ($validatedData['code'] === 201)
         {
-            $result = new JsonResponse($data, 201);
+            $code = $validatedData['code'];
+            $data['user'] = $this->moduleRepository->insertModuleAndReturn($userId, $validatedData['module']);
         }
         else
         {
-            $sortedData['module'] = $data;
-            $result = new Response($app['twig']->render($this->templateName, $sortedData), 201);
+            $code = $validatedData['code'];
+            $data['error'] = $validatedData['error'];
         }
 
-        return $result;
+
+        $response = $this->createResponse($code, $data, $request, $app);
+
+        return $response;
     }
 
     /**
@@ -185,6 +193,74 @@ class ModuleService
         return $result;
     }
 
+    public function validateNewModule($postData)
+    {
+        $result = null;
+
+        // notwendige Parameter zum Anlegen eines neuen Moduls in der Datenbank
+        if (false === array_key_exists('shortname', $postData))
+        {
+            $result['code'] = 412;
+            $result['error'] = "Der Eingabeparameter 'shortname' für Modul-Kürzel ist nicht angegeben (erforderlich)";
+        }
+        elseif (false === array_key_exists('longname', $postData))
+        {
+            $result['code'] = 412;
+            $result['error'] = "Der Eingabeparameter 'longname' für Modul-Bezeichnung st nicht angegeben (erforderlich)";
+        }
+        else
+        {
+            $result['code']  = 201;
+            $result['module']['generated'] = 'true';
+            $result['module']['shortname'] = $postData['shortname'];
+            $result['module']['longname'] = $postData['longname'];
+        }
+
+        // optional, aber relevante Parameter zum Anlegen eines neuen Moduls in der Datenbank
+        if (false === array_key_exists('code', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'code' für Modul-Code ist nicht angegeben (optional)";
+            $result['module']['code'] = '';
+        }
+        elseif (false === array_key_exists('description', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'description' für Modul-Beschreibung ist nicht angegeben (optional)";
+            $result['module']['description'] = '';
+        }
+        elseif (false === array_key_exists('semester', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'semester' für Modul-Semester ist nicht angegeben (optional)";
+            $result['module']['semester'] = '';
+        }
+        elseif (false === array_key_exists('ects', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'ects' für Modul-ECTS ist nicht angegeben (optional)";
+            $result['module']['ects'] = '';
+        }
+        elseif (false === array_key_exists('conditions', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'conditions' für Modul-Vorraussetzung ist nicht angegeben (optional)";
+            $result['module']['conditions'] = '';
+        }
+        elseif (false === array_key_exists('lecturer', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'lecturer' für Modul-Dozent ist nicht angegeben (optional)";
+            $result['module']['lecturer'] = '';
+        }
+        elseif (false === array_key_exists('attempt', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'attempt' für Modul-Versuch ist nicht angegeben (optional)";
+            $result['module']['attempt'] = '';
+        }
+        elseif (false === array_key_exists('grade', $postData))
+        {
+            $result['warning'][] = "Der Eingabeparameter 'grade' für Modul-Note ist nicht angegeben (optional)";
+            $result['module']['grade'] = '';
+        }
+
+        return $result;
+    }
+
     /**
      * Gibt die Id des angemeldeten Benutzers zurück
      *
@@ -219,5 +295,19 @@ class ModuleService
         }
 
         return $sortedData;
+    }
+
+    public function createResponse($code, $data, Request $request, Application $app)
+    {
+        if (0 === strpos($request->headers->get('Accept'), 'application/json'))
+        {
+            $response = new JsonResponse($data, $code);
+        }
+        else
+        {
+            $response = new Response($app['twig']->render($this->templateName, $data), $code);
+        }
+
+        return $response;
     }
 }

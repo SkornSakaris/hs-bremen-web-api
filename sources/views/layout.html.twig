@@ -28,17 +28,17 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Home</a></li>
-                <li><a href="/order/">Order</a></li>
-                <li><a href="/module/">Module</a></li>
-                <li><a href="/user/">Profile</a></li>
+                <li><a href="/order">Order</a></li>
+                <li><a href="/module">Module</a></li>
+                <li><a href="/user">Profile</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted('ROLE_USER') %}
                     <li><a href="/user/{{ app.user.id }}"><span class="glyphicon glyphicon-user"></span> {{ app.user.username }}</a></li>
-                    <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 {% else %}
                     <li><a href="/registration/"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 {% endif %}
             </ul>
         </div>

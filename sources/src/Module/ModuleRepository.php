@@ -124,23 +124,22 @@ EOS;
      * Erstellt ein neues Modul, verknüpftes mit dem Benutzer und gibt es um die erstellte Id erweitert zurück
      *
      * @param int $userId
-     * @param Module $module
+     * @param array $moduleData
      *
      * @return Module $module
      */
-    public function insertModuleAndReturn($userId, $module)
+    public function insertModuleAndReturn($userId, $moduleData)
     {
-        $data = $module->jsonSerialize();
+        //$data = $module->jsonSerialize();
 
-        $this->insertModule($data);
+        $this->insertModule($moduleData);
 
         $moduleId = $this->connection->lastInsertId();
-        $module->setId($moduleId);
-        $data['id'] = $moduleId;
+        $moduleData['id'] = $moduleId;
 
-        $this->insertUserModuleRelation($userId, $data);
+        $this->insertUserModuleRelation($userId, $moduleData);
 
-        return $module;
+        return new Module($moduleData);
     }
 
     /**
