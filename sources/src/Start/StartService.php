@@ -58,7 +58,7 @@ class StartService
     {
         return new Response(
             $app['twig']->render(
-                'newmodule.html.twig', array(
+                'module.html.twig', array(
                     'error' => $app['security.last_error']($request),
                     'last_username' => $app['session']->get('_security.last_username'),
                 )

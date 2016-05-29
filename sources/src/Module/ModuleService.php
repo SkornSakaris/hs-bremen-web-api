@@ -57,7 +57,6 @@ class ModuleService
         {
             $sortedData['moduls'] = $this->sortResultForTemplate($data);
             $sortedData['quantity'] = count($data);
-
             $result = new Response($app['twig']->render($this->templateName, $sortedData), 200);
         }
 
