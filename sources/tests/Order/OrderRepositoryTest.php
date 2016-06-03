@@ -24,8 +24,8 @@ class OrderRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
-     */
+ * @test
+ */
     public function shouldReturnTableName()
     {
         self::assertEquals('order', $this->repository->getTableName());

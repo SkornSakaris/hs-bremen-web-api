@@ -66,7 +66,7 @@ class SecurityProvider implements ServiceProviderInterface
             'security.access_rules' => array(
                 array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
                 array('^/docs.+$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-                array('^/.+$', 'ROLE_USER')
+                array('^/.+$', 'ROLE_USER'),
             )
         ));
 

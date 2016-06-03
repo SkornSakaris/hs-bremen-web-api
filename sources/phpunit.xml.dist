@@ -12,6 +12,10 @@
          bootstrap="vendor/autoload.php"
         >
 
+    <php>
+        <server name="KERNEL_DIR" value="/src/" />
+    </php>
+
     <testsuites>
         <testsuite name="Web-API Test Suite">
             <directory>./tests</directory>

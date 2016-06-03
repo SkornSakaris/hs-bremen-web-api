@@ -28,7 +28,7 @@ class UserService
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->templateName = 'dummy.html.twig';
+        $this->templateName = 'user.html.twig';
     }
 
     public function getAllUsers(Request $request, Application $app)
@@ -83,6 +83,8 @@ class UserService
 
     public function changeUserById($userId, Request $request, Application $app)
     {
+        echo 'PUT /user/' . $userId . '<br>';
+
         $code = null;
         $data = null;
         $postData = null;

@@ -181,22 +181,6 @@ EOS;
     {
         $userId = 1;
 
-        $module = new Module(
-            [
-                'generated' => 'true',
-                'code' => '0.0',
-                'shortname' => 'MUSTER',
-                'longname' => 'Muster-Modul',
-                'description' => 'Muster-Beschreibung',
-                'semester' => 1,
-                'ects' => 5,
-                'conditions' => '-',
-                'lecturer' => 'Mustermann',
-                'attempt' => 1,
-                'grade' => 0.0,
-            ]
-        );
-
         $moduleData = [
             'generated' => 'true',
             'code' => '0.0',
@@ -216,7 +200,7 @@ EOS;
             ->willReturn(1)
         ;
 
-        $result = $this->repository->insertModuleAndReturn($userId, $module);
+        $result = $this->repository->insertModuleAndReturn($userId, $moduleData);
 
         self::assertEquals(1, $result->getId());
     }

@@ -4,6 +4,9 @@
     <div class="well">
         <h3>Module!</h3>
     </div>
+    {% if error is defined %}
+        {{ error }} <br>
+    {% endif %}
     {% if moduls is not defined %}
         {% if module is not defined %}
             <form class="form-horizontal" role="form" action="/module/" method="post">
@@ -11,73 +14,73 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="id">Id:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="id" disabled>
+                            <input type="text" class="form-control" id="id" name="id" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="generated">Generiert:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="generated" disabled>
+                            <input type="text" class="form-control" id="generated" name="generated" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="code">Code:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="code" placeholder="1.1">
+                            <input type="text" class="form-control" id="code" name="code" placeholder="1.1">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="shortname">Kürzel:</label>
+                        <label class="control-label col-sm-2" for="shortname">Kürzel <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="shortname" placeholder="MATHE1">
+                            <input type="text" class="form-control" id="shortname" name="shortname" placeholder="MATHE1" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="longname">Bezeichnung:</label>
+                        <label class="control-label col-sm-2" for="longname">Bezeichnung <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="longname" placeholder="Lineare Algebra">
+                            <input type="text" class="form-control" id="longname" name="longname" placeholder="Lineare Algebra" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="description">Beschreibung:</label>
                         <div class="col-sm-4">
-                            <textarea class="form-control" id="description" placeholder="Die Beschreibung des Moduls"></textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="Die Beschreibung des Moduls"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="semester">Semester:</label>
+                        <label class="control-label col-sm-2" for="semester">Semester <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="semester" placeholder="2">
+                            <input type="number" class="form-control" id="semester" name="semester" placeholder="2" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="ects">ECTS:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="ects" placeholder="6">
+                            <input type="number" class="form-control" id="ects" name="ects" placeholder="6">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="conditions">Vorraussetzung:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="conditions" placeholder="-">
+                            <input type="text" class="form-control" id="conditions" name="conditions" placeholder="-">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="lecturer">Dozent:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="lecturer" placeholder="Prof. Dr. Mustermann">
+                            <input type="text" class="form-control" id="lecturer" name="lecturer" placeholder="Prof. Dr. Mustermann">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="attempt">Versuch:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="attempt" placeholder="1">
+                            <input type="number" class="form-control" id="attempt" name="attempt" placeholder="1">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="grade">Note:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="grade" placeholder="4,0">
+                            <input type="number" class="form-control" id="grade" name="grade" placeholder="4,0">
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,73 +96,73 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="id">Id:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="id" value="{{ module.id }}" disabled>
+                            <input type="text" class="form-control" id="id" name="id" value="{{ module.id }}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="generated">Generiert:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="generated" value="{{ module.generated }}" disabled>
+                            <input type="text" class="form-control" id="generated" name="generated" value="{{ module.generated }}" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="code">Code:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="code" value="{{ module.code }}" placeholder="1.1">
+                            <input type="text" class="form-control" id="code" name="code" value="{{ module.code }}" placeholder="1.1">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="shortname">Kürzel:</label>
+                        <label class="control-label col-sm-2" for="shortname">Kürzel <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="shortname" value="{{ module.shortname }}" placeholder="MATHE1">
+                            <input type="text" class="form-control" id="shortname" name="shortname" value="{{ module.shortname }}" placeholder="MATHE1" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="longname">Bezeichnung:</label>
+                        <label class="control-label col-sm-2" for="longname">Bezeichnung <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="longname" value="{{ module.longname }}" placeholder="Lineare Algebra">
+                            <input type="text" class="form-control" id="longname" name="longname" value="{{ module.longname }}" placeholder="Lineare Algebra" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="description">Beschreibung:</label>
                         <div class="col-sm-4">
-                            <textarea class="form-control" id="description" placeholder="Die Beschreibung des Moduls">{{ module.description }}</textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="Die Beschreibung des Moduls">{{ module.description }}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="semester">Semester:</label>
+                        <label class="control-label col-sm-2" for="semester">Semester <span style="color: red;">*</span> :</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="semester" value="{{ module.semester }}" placeholder="2">
+                            <input type="number" class="form-control" id="semester" name="semester" value="{{ module.semester }}" placeholder="2" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="ects">ECTS:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="ects" value="{{ module.ects }}" placeholder="6">
+                            <input type="number" class="form-control" id="ects" name="ects" value="{{ module.ects }}" placeholder="6">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="conditions">Vorraussetzung:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="conditions" value="{{ module.conditions }}" placeholder="-">
+                            <input type="text" class="form-control" id="conditions" name="conditions" value="{{ module.conditions }}" placeholder="-">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="lecturer">Dozent:</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="lecturer" value="{{ module.lecturer }}" placeholder="Prof. Dr. Mustermann">
+                            <input type="text" class="form-control" id="lecturer" name="lecturer" value="{{ module.lecturer }}" placeholder="Prof. Dr. Mustermann">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="attempt">Versuch:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="attempt" value="{{ module.attempt }}" placeholder="1">
+                            <input type="number" class="form-control" id="attempt" name="attempt" value="{{ module.attempt }}" placeholder="1">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="grade">Note:</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="grade" value="{{ module.grade }}" placeholder="4,0">
+                            <input type="number" class="form-control" id="grade" name="grade" value="{{ module.grade }}" placeholder="4,0">
                         </div>
                     </div>
                     <div class="form-group">

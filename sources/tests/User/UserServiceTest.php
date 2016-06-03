@@ -161,4 +161,6 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         self::assertEquals($result['error'], "Die Eingabeparamter 'password' und 'passwordConf' stimmen nicht überein");
     }
 
+
+
 }

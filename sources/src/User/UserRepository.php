@@ -52,22 +52,28 @@ EOS;
 
     public function createTestData()
     {
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Jannik', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Andi', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Nils', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Ole', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[0] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Jannik', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[1] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Andi', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[2] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Nils', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[3] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Ole', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
 
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 5', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 6', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 7', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 8', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 9', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
-        $sql[] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 10', '','5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[4] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 5', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[5] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 6', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[6] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 7', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[7] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 8', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[8] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 9', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
+        $sql[9] = "INSERT INTO `{$this->getTableName()}` VALUES(null, 'Mister 10', '', '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==', 'ROLE_USER')";
 
         foreach ($sql as $query)
         {
             $this->connection->exec($query);
         }
+    }
+
+    public function dropTableUsersToModuls()
+    {
+        $sql = "DROP TABLE IF EXISTS `users_moduls`";
+        $this->connection->exec($sql);
     }
 
     public function createTableUsersToModuls()
@@ -82,12 +88,6 @@ CREATE TABLE IF NOT EXISTS `users_moduls` (
     grade FLOAT(1)
 )
 EOS;
-        $this->connection->exec($sql);
-    }
-
-    public function dropTableUsersToModuls()
-    {
-        $sql = "DROP TABLE IF EXISTS `users_moduls`";
         $this->connection->exec($sql);
     }
 
@@ -178,7 +178,7 @@ EOS;
 
 
     /**
-     * @param array $userData
+     * @param $userData
      * @return User
      */
     public function insertNewUserAndReturn($userData)
@@ -196,10 +196,24 @@ EOS;
         return new User($userData['id'], $userData['username'], $userData['password'], explode(',', $userData['roles']), true, true, true, true);
     }
 
+    /**
+     * @param $userData
+     *
+     * @return User
+     *
+     * @throws DatabaseException
+     */
     public function updateUserByIdAndReturn($userData)
     {
+        $encoder = new MessageDigestPasswordEncoder();
+
         $userId = $userData['id'];
         unset($userData['id']);
+
+        if (array_key_exists('password', $userData))
+        {
+            $userData['password'] = $encoder->encodePassword($userData['password'], '');
+        }
 
         $this->connection->update("`{$this->getTableName()}`", $userData, ['id' => $userId]);
 
@@ -208,6 +222,11 @@ EOS;
         return new User($user->getId(), $user->getUsername(), $user->getPassword(), $user->getRoles(), true, true, true, true);
     }
 
+    /**
+     * @param $userId
+     *
+     * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
+     */
     public function deleteUserById($userId)
     {
         $this->connection->delete("`{$this->getTableName()}`", ['id' => $userId]);
