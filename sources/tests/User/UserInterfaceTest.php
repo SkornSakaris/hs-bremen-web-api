@@ -8,7 +8,9 @@
 
 namespace HsBremen\WebApi\Tests\User;
 
+use HsBremen\WebApi\Application;
 use Silex\WebTestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserInterfaceTest extends WebTestCase
 {
@@ -18,7 +20,7 @@ class UserInterfaceTest extends WebTestCase
      */
     public function createApplication()
     {
-//        $app = require __DIR__.'/../../src/Application.php';
+        $app = new Application();
         $app['debug'] = true;
         $app['session.test'] = true;
         unset($app['exception_handler']);
@@ -32,7 +34,18 @@ class UserInterfaceTest extends WebTestCase
     public function testInitialPage()
     {
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/');
+
+        $options = [
+            'HTTP_Accept'   => 'application/json',
+        ];
+
+        $client->request('GET', '/', [], [], $options);
+
+        $response = $client->getResponse();
+
+        var_dump($response);
+
+//        self::assertInstanceOf(JsonResponse::class, $response);
 
 //        $this->assertTrue($client->getResponse()->isOk());
 //        $this->assertCount(1, $crawler->filter('h1:contains("Contact us")'));
