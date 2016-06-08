@@ -6,7 +6,6 @@ use Basster\Silex\Provider\Swagger\SwaggerProvider;
 use Basster\Silex\Provider\Swagger\SwaggerServiceKey;
 use HsBremen\WebApi\Database\DatabaseProvider;
 use HsBremen\WebApi\Module\ModuleServiceProvider;
-use HsBremen\WebApi\Order\OrderServiceProvider;
 use HsBremen\WebApi\Security\SecurityProvider;
 use HsBremen\WebApi\Start\StartServiceProvider;
 use HsBremen\WebApi\User\UserServiceProvider;
@@ -19,7 +18,6 @@ use Silex\Provider\UrlGeneratorServiceProvider;
 use Swagger\Annotations as SWG;
 use SwaggerUI\Silex\Provider\SwaggerUIServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Class Application
