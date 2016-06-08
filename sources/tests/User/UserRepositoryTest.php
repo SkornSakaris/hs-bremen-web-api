@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: LetoAtreides
- * Date: 30.05.2016
- * Time: 01:11
- */
 
 namespace HsBremen\WebApi\Tests\User;
 

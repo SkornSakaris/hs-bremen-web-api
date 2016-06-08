@@ -73,7 +73,6 @@ class Application extends Silex
         // eigene Provider fuer ID-Container, Routing, Funktionalitaet, etc.
         $app->register(new StartServiceProvider());
         $app->register(new UserServiceProvider());
-        $app->register(new OrderServiceProvider());
         $app->register(new ModuleServiceProvider());
 
 
