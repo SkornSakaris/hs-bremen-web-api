@@ -1,12 +1,20 @@
 # Web-API | HS-Bremen @ SoSe 2016 
 
+## Projekt
+- Name: ModulManager
+- Beschreibung: Stellt eine API zur Verwaltung von unterschiedlichen Studienmodulen zur Verfügung.
+  Hierzu kann mittels JSON-Objekten oder über eine grafische, auf html basierende Oberfläche mit der API interagiert werden.
+
+## Projektgruppe
+- Jannik Busse
+- Andreas Marquardt
+- Nils Peters
+
 ## Benötigte Software
 - [Git](https://git-scm.com/) (Quellcodeverwaltung)
 - [VirtualBox](https://www.virtualbox.org/) (Virtualisierungs Software)
 - [Vagrant](https://www.vagrantup.com/) (Automatisierte VM Konfiguration)
-- [XAMPP](https://www.apachefriends.org) oder lokale PHP Installation (für lokale Tests [geht auch ohne])
 - [Composer](https://getcomposer.org/) PHP Paketmanager (geht auch ohne, über die VM)
-- Einen Editor (vorzugsweise PhpStorm)
 
 ## Initiales Setup
 1. Klone dieses Repository `git clone git@github.com:Basster/hs-bremen-web-api.git`
@@ -15,21 +23,6 @@
 4. Warte bis die VM erstellt wurde, währenddessen folgendes, als neue Zeile, in die Datei `C:\Windows\System32\drivers\etc\hosts` bzw. `/etc/hosts/` eintragen (Als Administrator/root bearbeiten):  
 ```
 192.168.56.111 web-api.vm
-```
-5. Wenn die VM fertig gebaut ist, sieht das in etwa so aus:  
-```
-       + Zwei Elefanten +++++++++++ Zwei Elefanten +
-       
-       + Viel Text +++++++++++++++++++++ Viel Text +
-       
- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- |  ____                _      _    _                    _  |
- | |  _ \ ___  __ _  __| |    / \  | |__   _____   _____| | |
- | | |_) / _ \/ _` |/ _` |   / _ \ | '_ \ / _ \ \ / / _ \ | |
- | |  _ <  __/ (_| | (_| |  / ___ \| |_) | (_) \ V /  __/_| |
- | |_| \_\___|\__,_|\__,_| /_/   \_\_.__/ \___/ \_/ \___(_) |
- |                                                          |
- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++       
 ```
 6. Installiere die erforderlichen PHP Pakete: `composer install` (wenn lokale PHP Installation, sonst unter `/var/www/sources` per SSH auf der VM)
 7. Browser öffnen und `http://web-api.vm/` eingeben.
@@ -48,7 +41,7 @@ User: vagrant
 Private-Key: `./puphpet/files/dot/ssh/id_rsa`  
 Kein Password
 
-### Was ist auf der VM installiert?
+## Was ist auf der VM installiert?
 - Ubuntu 14.04 LTS x64 (1 CPU, 512 MB RAM)
 - IP: 192.168.56.111
 - Offene Ports: TCP 9000 (xDebug) und TCP 3306 (MySQL)
@@ -57,26 +50,6 @@ Kein Password
 - PHP 5.6
 - Nodejs 5
 - MariaDB 10.1 (user: root, pw: 123)
-
-## Testen
-```
-cd sources
-php vendor/bin/phpunit -c phpunit.xml.dist
-```
-oder über die IDE
-
-## Swagger UI Standalone
-
-https://github.com/swagger-api/swagger-ui#build  
-
-Benötigt npm und python! 
- 
-- npm install
-- npm run serve
-- Browser: http://localhost:8080/
-  
-TODO: PhpStorm Setup beschreiben!
-
 
 
 
