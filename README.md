@@ -6,9 +6,19 @@
   Hierzu kann mittels JSON-Objekten oder über eine grafische, auf html basierende Oberfläche mit der API interagiert werden.
 
 ## Projektgruppe
-- Jannik Busse
-- Andreas Marquardt
-- Nils Peters
+- Jannik Busse (372525)
+- Andreas Marquardt (373130)
+- Nils Peters (373208)
+
+## Dokumentation
+- Framework: Swagger
+- Swagger-JSON: http://web-api.vm/docs/swagger.json
+- Swagger-UI: http://web-api.vm/docs/swagger
+
+## Authentifizierung
+- Komponente: Silex Security
+- Verfahren: Token-Authentification
+- Zugang: Benutzername -> Ole, Passwort -> foo
 
 ## Benötigte Software
 - [Git](https://git-scm.com/) (Quellcodeverwaltung)
@@ -17,7 +27,7 @@
 - [Composer](https://getcomposer.org/) PHP Paketmanager (geht auch ohne, über die VM)
 
 ## Initiales Setup
-1. Klone dieses Repository `git clone git@github.com:Basster/hs-bremen-web-api.git`
+1. Klone dieses Repository `git clone git@github.com:SkornSakaris/hs-bremen-web-api.git`
 2. Wechsel in das Verzeichnis `cd hs-bremen-web-api`
 3. Starte die VM mit `vagrant up`
 4. Warte bis die VM erstellt wurde, währenddessen folgendes, als neue Zeile, in die Datei `C:\Windows\System32\drivers\etc\hosts` bzw. `/etc/hosts/` eintragen (Als Administrator/root bearbeiten):  
